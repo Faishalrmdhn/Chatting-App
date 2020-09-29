@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- <loading-screen :is-loading="isLoading"></loading-screen> -->
     <router-view />
   </div>
 </template>
@@ -7,19 +8,30 @@
 //
 <script>
 // import HelloWorld from "./components/HelloWorld.vue";
-// import { mapActions } from 'vuex'
+// import splashScreen from "./components/splashScreen.vue";
+import { mapActions } from "vuex";
 export default {
   name: "App",
   components: {
     // HelloWorld,
   },
+  // data() {
+  //   return {
+  //     isLoading: true,
+  //   };
+  // },
+  // mounted() {
+  //   setTimeout(() => {
+  //     this.isLoading = false;
+  //   }, 5000);
+  // },
   methods: {
-    // ...mapActions(['interceptorRequest', 'interceptorResponse'])
+    ...mapActions(["interceptorRequest", "interceptorResponse"]),
   },
-  //  created() {
-  //   this.interceptorRequest()
-  //   this.interceptorResponse()
-  // }
+  created() {
+    this.interceptorRequest();
+    this.interceptorResponse();
+  },
 };
 </script>
 

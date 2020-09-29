@@ -1,5 +1,5 @@
 <template>
-  <b-row class="login" fluid align-h="center">
+  <b-row class="forgot" fluid align-h="center">
     <b-col sm="6" class="container">
       <b-alert :show="alert" class="m-3" variant="danger">
         {{ isMsg }}
@@ -7,7 +7,7 @@
       <b-row class="content" align-h="center" align-v="center">
         <b-col md="10" class="card">
           <div class="text-left">
-            <h3 class="text-center" style="color:#7e98df; font-weight:500;">
+            <h3 class="text-center" style="color: #7e98df; font-weight: 500">
               Forgot Password
             </h3>
             <p><strong> You'll get messages soon on your e-mail</strong></p>
@@ -25,9 +25,7 @@
 
               <b-row class="text-center m-4">
                 <b-col>
-                  <button class="button">
-                    Send
-                  </button>
+                  <button class="button">Send</button>
                 </b-col>
               </b-row>
             </b-form>
@@ -80,7 +78,7 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap");
 
-.login {
+.forgot {
   font-family: "Rubik", sans-serif;
   text-align: center;
   width: 100%;

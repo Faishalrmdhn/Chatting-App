@@ -7,7 +7,7 @@
       <b-row class="content" align-h="center" align-v="center">
         <b-col md="10" class="card">
           <div class="text-left">
-            <h3 class="text-center" style="color:#7e98df; font-weight:500;">
+            <h3 class="text-center" style="color: #7e98df; font-weight: 500">
               Login
             </h3>
             <p><strong> Hi, Welcome back!</strong></p>
@@ -57,9 +57,7 @@
               </b-row>
               <b-row class="text-center m-4">
                 <b-col>
-                  <button class="button">
-                    Login
-                  </button>
+                  <button class="button">Login</button>
                 </b-col>
               </b-row>
 
@@ -79,9 +77,7 @@
             <b-row class="text-center">
               <b-col>
                 Don't have an account?
-                <router-link to="/register">
-                  Sign up
-                </router-link>
+                <router-link to="/register"> Sign up </router-link>
               </b-col>
             </b-row>
           </div>
@@ -106,7 +102,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions(["login", "getUserById"]),
     onSubmit() {
       this.login(this.form)
         .then((result) => {
@@ -116,23 +112,19 @@ export default {
             appendToast: true,
           });
           setTimeout(() => {
-            this.$router.push("/profile");
+            this.$router.push("/main");
           }, 1500);
-          console.log(result);
+          console.log(result.data.user_id);
+          this.getUserById(result.data.user_id);
         })
         .catch((error) => {
           this.alert = true;
           this.isMsg = error.data.msg;
+          // this.isMsg = error.data;
           setTimeout(() => {
             this.alert = false;
           }, 2000);
         });
-    },
-    onReset() {
-      this.form = {
-        user_password: "",
-        user_email: "",
-      };
     },
   },
 };

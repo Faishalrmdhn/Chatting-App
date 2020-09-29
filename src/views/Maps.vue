@@ -3,7 +3,7 @@
     <h1>maps</h1>
     <GmapMap
       :center="coordinate"
-      :zoom="10"
+      :zoom="100"
       map-type-id="terrain"
       style="width: 500px; height: 300px"
     >

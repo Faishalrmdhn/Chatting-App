@@ -12,6 +12,8 @@
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.17.3",
     "core-js": "^3.6.5",
+    "file-system": "^2.2.2",
+    "please-wait": "0.0.5",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
     "vue-browser-geolocation": "^1.8.0",

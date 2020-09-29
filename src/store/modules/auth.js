@@ -4,13 +4,15 @@ import router from "../../router/index";
 export default {
   state: {
     user: {},
+    // user_id: 0,
     token: localStorage.getItem("token") || null,
   },
   mutations: {
     setUser(state, payload) {
       state.user = payload;
       state.token = payload.token;
-      //   console.log(payLoad)
+      // state.user_id = payload.user_id;
+      console.log(payload);
     },
     delUser(state) {
       state.user = {};
@@ -21,7 +23,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://127.0.0.1:3001/user/login", payload)
+          .post("http://localhost:3000/user/login", payload)
           .then((response) => {
             console.log(response);
             context.commit("setUser", response.data.data);
@@ -36,7 +38,7 @@ export default {
     register(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://127.0.0.1:3001/user/register", payload)
+          .post("http://localhost:3000/user/register", payload)
           .then((response) => {
             console.log(response.data);
             resolve(response.data);
@@ -94,7 +96,7 @@ export default {
     forgotPassword(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://127.0.0.1:3001/user/forgot-password", payload)
+          .post("http://localhost:3000/user/forgot-password", payload)
           .then((response) => {
             console.log("dibawah ini");
             console.log(response);
@@ -106,5 +108,15 @@ export default {
       });
     },
   },
-  getters: {},
+  getters: {
+    isLogin(state) {
+      return state.token !== null;
+    },
+    getUser(state) {
+      return state.user;
+    },
+    // getUserId(state) {
+    //   return state.user_id;
+    // },
+  },
 };
