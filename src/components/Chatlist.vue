@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <b-sidebar id="editProfile" bg-variant="light" title="@wdlam" width="35%">
       <div class="px-3 py-2 text-center">
-        <b-avatar size="3em">{{ user.user_image }} </b-avatar>
+        <b-avatar size="3em">{{ user.profileImage }} </b-avatar>
         <h6>{{ user.user_name }}</h6>
         <p>@wdlam</p>
 
@@ -36,6 +36,58 @@
           {{ user.user_bio }}
           <p>Bio</p>
         </div>
+
+        <div class="edit-option-click">
+          <h5 @click="$bvModal.show('modalEditProfile')">Edit Profile</h5>
+        </div>
+        <!-- ====================================Edit Profile Start================================ -->
+        <b-modal id="modalEditProfile" size="lg">
+          <template v-slot:modal-header>Edit Profile</template>
+          <b-form v-on:submit.prevent="searchFriends()">
+            <b-avatar size="5em">{{ user.profileImage }}</b-avatar>
+            <b-form-group style="mt-3" label="Name">
+              <b-form-input type="input" required :placeholder="user.user_name">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="Phone">
+              <b-form-input
+                type="number"
+                required
+                :placeholder="user.user_phone"
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="Bio">
+              <b-form-input
+                type="text-area"
+                required
+                :placeholder="user.user_bio"
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="lat">
+              <b-form-input type="input" required :placeholder="user.user_lat">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="lng">
+              <b-form-input type="input" required :placeholder="user.user_lng">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="profile image">
+              <b-form-file
+                type="file"
+                @change="handleFile"
+                required
+                :placeholder="user.profileImage"
+              >
+              </b-form-file>
+            </b-form-group>
+          </b-form>
+          <!-- <div>{{ user }}</div> -->
+          <template v-slot:modal-footer></template>
+        </b-modal>
+        <!-- ====================================Edit Profile Ends================================ -->
+
         <div class="edit-option">
           <h5>Location</h5>
           <GmapMap
@@ -53,7 +105,6 @@
             />
           </GmapMap>
         </div>
-        <div class="edit-option"><h5>Edit Profile</h5></div>
       </div>
     </b-sidebar>
     <div class="outer-container">
@@ -68,10 +119,10 @@
           <img src="../assets/Menu.png" alt="" />
         </div>
       </div>
-      <div v-if="user.user_image !== ''" class="text-center">
-        <b-avatar size="3em">{{ user.user_image }}</b-avatar>
+      <div v-if="user.profileImage !== ''" class="text-center">
+        <b-avatar size="3em">{{ user.profileImage }}</b-avatar>
       </div>
-      <div v-if="user.user_image === ''" class="text-center">
+      <div v-if="user.profileImage === ''" class="text-center">
         <img style="max-width: 3em" src="../assets/account.png" alt="" />
       </div>
       <div class="text">
@@ -81,7 +132,7 @@
         <p>@wdiam</p>
       </div>
       <div class="search">
-        <div style="margin-right:10px">
+        <div style="margin-right: 10px">
           <input placeholder="Type your message..." type="search" />
         </div>
 
@@ -105,7 +156,7 @@
             ><img
               style="max-width: 2em"
               src="../assets/tony.jpg"
-              alt=""/></b-col
+              alt="" /></b-col
           ><b-col style="font-size: 18px; font-weight: 500"
             ><b-row>{{ value.user_name }}</b-row
             ><b-row style="color: grey; font-size: 14px; font-weight: 400"
@@ -172,7 +223,7 @@
               ><b-col><b-avatar size="2em"></b-avatar></b-col
               ><b-col>{{ value.user_name }}</b-col
               ><b-col @click="inviteFriend(value.user_id)"
-                ><img src="../assets/Plus.png" alt="add friend"/></b-col
+                ><img src="../assets/Plus.png" alt="add friend" /></b-col
             ></b-row>
           </b-container>
         </b-form>
@@ -181,6 +232,7 @@
       <!-- ==============Modal search friend Ends================ -->
     </div>
     <div v-show="edit" class="content-wrapper"></div>
+    <div>{{ user }}</div>
   </div>
 </template>
 
@@ -194,6 +246,7 @@ export default {
   },
   data() {
     return {
+      url_API: process.env.VUE_APP_URL,
       coordinate: {
         lat: 0,
         lng: 0,
@@ -219,6 +272,8 @@ export default {
           lat: coordinates.lat,
           lng: coordinates.lng,
         };
+        console.log(coordinates.lat);
+        console.log(coordinates.lng);
       })
       .catch((error) => {
         alert(error);
@@ -296,6 +351,10 @@ export default {
       };
       this.getRoomById(result);
     },
+    handleFile(event) {
+      this.form.profileImage = event.target.files[0];
+      console.log(event.target.files);
+    },
   },
 };
 </script>
@@ -327,6 +386,14 @@ export default {
   text-align: left;
   color: black;
   width: 100%;
+}
+
+.edit-option-click {
+  font-family: "Rubik", sans-serif;
+  text-align: left;
+  color: black;
+  width: 100%;
+  cursor: pointer;
 }
 .container-header {
   font-size: 29px;

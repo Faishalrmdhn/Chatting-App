@@ -64,7 +64,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           });
       });
     },
@@ -114,7 +113,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           });
       });
     },
@@ -131,15 +129,15 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           });
       });
     },
     editProfile(context, payload) {
+      //API blm bener
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/room/chat/by-id", payload)
+          .post("http://localhost:3000/user/", payload)
           .then((res) => {
             console.log(res);
             console.log("done!");
@@ -148,7 +146,6 @@ export default {
           })
           .catch((err) => {
             reject(err);
-            // console.log(err);
           });
       });
     },
