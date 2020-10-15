@@ -1,8 +1,11 @@
 <template>
   <div class="content-wrapper">
+    {{ url_API + user.profileImage }}
     <b-sidebar id="editProfile" bg-variant="light" title="@wdlam" width="35%">
       <div class="px-3 py-2 text-center">
+        <!-- <div> <img :src=" url_API + user.profileImage" alt=""></div> -->
         <b-avatar size="3em">{{ user.profileImage }} </b-avatar>
+        <!-- <img :src="user.profileImage" alt="" /> -->
         <h6>{{ user.user_name }}</h6>
         <p>@wdlam</p>
 
@@ -44,7 +47,7 @@
         <b-modal id="modalEditProfile" size="lg">
           <template v-slot:modal-header>Edit Profile</template>
           <b-form v-on:submit.prevent="searchFriends()">
-            <b-avatar size="5em">{{ user.profileImage }}</b-avatar>
+            <b-avatar size="5em"> {{ url_API + user.profileImage }} </b-avatar>
             <b-form-group style="mt-3" label="Name">
               <b-form-input type="input" required :placeholder="user.user_name">
               </b-form-input>
@@ -120,7 +123,7 @@
         </div>
       </div>
       <div v-if="user.profileImage !== ''" class="text-center">
-        <b-avatar size="3em">{{ user.profileImage }}</b-avatar>
+        <b-avatar size="3em"></b-avatar>
       </div>
       <div v-if="user.profileImage === ''" class="text-center">
         <img style="max-width: 3em" src="../assets/account.png" alt="" />

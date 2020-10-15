@@ -37,48 +37,48 @@
 </template>
 
 <script>
-import io from 'socket.io-client'
+import io from "socket.io-client";
 export default {
-  name: 'Chat',
+  name: "Chat",
   data() {
     return {
-      socket: io('http://localhost:3000'),
-      user_name: '',
+      socket: io("http://localhost:3000"),
+      user_name: "",
       room: null,
-      message: '',
+      message: "",
       messages: [
         {
-          username: 'Isal',
-          message: this.message
-        }
+          username: "Isal",
+          message: this.message,
+        },
       ],
-      typing: false
-    }
+      typing: false,
+    };
   },
   watch: {
     message(value) {
       value
-        ? this.socket.emit('typing', this.username)
-        : this.socket.emit('typing', false)
-    }
+        ? this.socket.emit("typing", this.username)
+        : this.socket.emit("typing", false);
+    },
   },
   mounted() {
     if (!this.$route.params.user_name) {
-      this.$router.push('/about')
+      this.$router.push("/about");
     }
     // proses get message axios
-    this.user_name = this.$route.params.user_name
-    this.socket.emit('welcomeMessage', this.user_name)
-    this.socket.on('chatMessage', data => {
-      this.messages.push(data)
-    })
+    this.user_name = this.$route.params.user_name;
+    this.socket.emit("welcomeMessage", this.user_name);
+    this.socket.on("chatMessage", (data) => {
+      this.messages.push(data);
+    });
 
-    this.socket.on('typingMessage', data => {
-      this.typing = data
-      console.log(data)
-    })
+    this.socket.on("typingMessage", (data) => {
+      this.typing = data;
+      console.log(data);
+    });
 
-    this.room = this.$route.params.room
+    this.room = this.$route.params.room;
   },
   methods: {
     sendMessage() {
@@ -93,13 +93,13 @@ export default {
       const setData = {
         username: this.user_name,
         message: this.message,
-        room: this.room
-      }
-      this.socket.emit('roomMessage', setData)
-      this.message = ''
-    }
-  }
-}
+        room: this.room,
+      };
+      this.socket.emit("roomMessage", setData);
+      this.message = "";
+    },
+  },
+};
 </script>
 
 <style scoped>
