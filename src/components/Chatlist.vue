@@ -1,115 +1,6 @@
 <template>
   <div class="content-wrapper">
-    {{ url_API + user.profileImage }}
-    <b-sidebar id="editProfile" bg-variant="light" title="@wdlam" width="35%">
-      <div class="px-3 py-2 text-center">
-        <!-- <div> <img :src=" url_API + user.profileImage" alt=""></div> -->
-        <b-avatar size="3em">{{ user.profileImage }} </b-avatar>
-        <!-- <img :src="user.profileImage" alt="" /> -->
-        <h6>{{ user.user_name }}</h6>
-        <p>@wdlam</p>
-
-        <div class="edit-option"><h5>Account</h5></div>
-        <div class="edit-option">
-          {{ user.user_phone }}
-          <p @click="$bvModal.show('modalEditPhone')">
-            Tap to change phone number
-          </p>
-          <!-- ==============================Modal Edit Phone Start====================== -->
-          <b-modal id="modalEditPhone">
-            <template v-slot:modal-header>Edit phone number</template>
-            <b-form v-on:submit.prevent="searchFriends()">
-              <b-input
-                v-model="search"
-                placeholder="search friends..."
-                type="search"
-              ></b-input>
-            </b-form>
-            <template v-slot:modal-footer></template>
-          </b-modal>
-          <!-- ==============================Modal Edit Phone Ends====================== -->
-        </div>
-        <hr />
-        <div class="edit-option">
-          @Wdlam
-          <p>username</p>
-        </div>
-        <hr />
-        <div class="edit-option">
-          {{ user.user_bio }}
-          <p>Bio</p>
-        </div>
-
-        <div class="edit-option-click">
-          <h5 @click="$bvModal.show('modalEditProfile')">Edit Profile</h5>
-        </div>
-        <!-- ====================================Edit Profile Start================================ -->
-        <b-modal id="modalEditProfile" size="lg">
-          <template v-slot:modal-header>Edit Profile</template>
-          <b-form v-on:submit.prevent="searchFriends()">
-            <b-avatar size="5em"> {{ url_API + user.profileImage }} </b-avatar>
-            <b-form-group style="mt-3" label="Name">
-              <b-form-input type="input" required :placeholder="user.user_name">
-              </b-form-input>
-            </b-form-group>
-            <b-form-group label="Phone">
-              <b-form-input
-                type="number"
-                required
-                :placeholder="user.user_phone"
-              >
-              </b-form-input>
-            </b-form-group>
-            <b-form-group label="Bio">
-              <b-form-input
-                type="text-area"
-                required
-                :placeholder="user.user_bio"
-              >
-              </b-form-input>
-            </b-form-group>
-            <b-form-group label="lat">
-              <b-form-input type="input" required :placeholder="user.user_lat">
-              </b-form-input>
-            </b-form-group>
-            <b-form-group label="lng">
-              <b-form-input type="input" required :placeholder="user.user_lng">
-              </b-form-input>
-            </b-form-group>
-            <b-form-group label="profile image">
-              <b-form-file
-                type="file"
-                @change="handleFile"
-                required
-                :placeholder="user.profileImage"
-              >
-              </b-form-file>
-            </b-form-group>
-          </b-form>
-          <!-- <div>{{ user }}</div> -->
-          <template v-slot:modal-footer></template>
-        </b-modal>
-        <!-- ====================================Edit Profile Ends================================ -->
-
-        <div class="edit-option">
-          <h5>Location</h5>
-          <GmapMap
-            :center="coordinate"
-            :zoom="15"
-            map-type-id="terrain"
-            style="width: 400px; height: 275px"
-          >
-            <GmapMarker
-              :position="coordinate"
-              @click="clickMarker"
-              :clickable="true"
-              :draggable="true"
-              icon="https://img.icons8.com/color/48/000000/map-pin.png"
-            />
-          </GmapMap>
-        </div>
-      </div>
-    </b-sidebar>
+    <!-- <div><img :src="url_API + user.profileImage" alt="" /></div> -->
     <div class="outer-container">
       <div class="container-header">
         <div class="top">Telegram</div>
@@ -122,8 +13,13 @@
           <img src="../assets/Menu.png" alt="" />
         </div>
       </div>
-      <div v-if="user.profileImage !== ''" class="text-center">
-        <b-avatar size="3em"></b-avatar>
+      <div
+        v-if="user.profileImage !== '' || user.profileImage !== undefined"
+        class="text-center"
+      >
+        <b-avatar size="3em"
+          ><img class="profileImage" :src="url_API + user.profileImage" alt=""
+        /></b-avatar>
       </div>
       <div v-if="user.profileImage === ''" class="text-center">
         <img style="max-width: 3em" src="../assets/account.png" alt="" />
@@ -209,7 +105,6 @@
       </b-modal>
       <!-- ===========================Modal Get FriendList Ends===================================== -->
       <!-- ==============Modal search friend start================ -->
-
       <b-modal id="modal-search-friend">
         <template v-slot:modal-header>Search Friend</template>
         <b-form v-on:submit.prevent="searchFriends()">
@@ -236,6 +131,148 @@
     </div>
     <div v-show="edit" class="content-wrapper"></div>
     <div>{{ user }}</div>
+    <!-- =============================Modal sidebar========================== -->
+    <b-sidebar id="editProfile" bg-variant="light" title="@wdlam" width="35%">
+      <div class="px-3 py-2 text-center">
+        <div>
+          <div
+            v-if="user.profileImage !== '' || user.profileImage !== undefined"
+            style="text-align: center"
+          >
+            <img
+              class="profileImage"
+              :src="url_API + user.profileImage"
+              alt="image profile"
+            />
+          </div>
+          <div
+            v-if="user.profileImage === '' || user.profileImage === undefined"
+          >
+            <img class="profileImage" src="../assets/default.png" alt="" />
+          </div>
+          <input
+            type="file"
+            ref="file"
+            @change="updateImage"
+            style="display: none"
+          />
+          <h6 @click="$refs.file.click()" style="cursor: pointer">
+            <b-icon icon="pencil-square"></b-icon>
+          </h6>
+        </div>
+        <h6>{{ user.user_name }}</h6>
+        <p>@wdlam</p>
+
+        <div class="edit-option"><h5>Account</h5></div>
+        <hr />
+        <div class="edit-option">
+          {{ user.user_phone }}
+          <p>Phone number</p>
+        </div>
+
+        <div class="edit-option">
+          @Wdlam
+          <p>username</p>
+        </div>
+
+        <div class="edit-option">
+          {{ user.user_bio }}
+          <p>Bio</p>
+        </div>
+        <hr />
+        <div class="edit-option-click">
+          <h5 @click="$bvModal.show('modalEditProfile')">Edit Profile</h5>
+        </div>
+        <!-- ====================================Edit Profile Start================================ -->
+        <b-modal id="modalEditProfile" size="lg" hide-footer style>
+          <template v-slot:modal-header>Edit Profile</template>
+          <b-form @submit.prevent>
+            <div class="editProfile">
+              <img
+                :src="url_API + user.profileImage"
+                class="imageEdit"
+                alt=""
+              />
+            </div>
+            <b-form-group style="mt-3" label="Name">
+              <b-form-input
+                v-model="form.user_name"
+                type="text"
+                required
+                :placeholder="user.user_name"
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="Phone">
+              <b-form-input
+                v-model="form.user_phone"
+                type="number"
+                :placeholder="user.user_phone"
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="Bio">
+              <b-form-textarea
+                v-model="form.user_bio"
+                :placeholder="user.user_bio"
+              >
+              </b-form-textarea>
+            </b-form-group>
+            <b-form-group label="lat">
+              <b-form-input
+                v-model="form.user_lat"
+                type="text"
+                :placeholder="user.user_lat"
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group label="lng">
+              <b-form-input
+                v-model="form.user_lng"
+                type="text"
+                :placeholder="user.user_lng"
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-row>
+              <b-col @click="$bvModal.hide('updateProfile')">
+                <b-button
+                  @click="editProfileUser()"
+                  block
+                  style="color: white"
+                  variant="info"
+                  type="submit"
+                  class="my-3"
+                  >Update</b-button
+                >
+              </b-col>
+            </b-row>
+          </b-form>
+          <!-- <div>{{ user }}</div> -->
+
+          <template v-slot:modal-footer></template>
+        </b-modal>
+        <!-- ====================================Edit Profile Ends================================ -->
+
+        <div class="edit-option">
+          <h5>Location</h5>
+          <GmapMap
+            :center="coordinate"
+            :zoom="15"
+            map-type-id="terrain"
+            style="width: 400px; height: 275px"
+          >
+            <GmapMarker
+              :position="coordinate"
+              @click="clickMarker"
+              :clickable="true"
+              :draggable="true"
+              icon="https://img.icons8.com/color/48/000000/map-pin.png"
+            />
+          </GmapMap>
+        </div>
+      </div>
+    </b-sidebar>
   </div>
 </template>
 
@@ -243,7 +280,7 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 // import Chatlist from "../components/Chatlist.vue";
 export default {
-  name: "Main",
+  name: "Chatlist",
   components: {
     // Chatlist,
   },
@@ -253,6 +290,16 @@ export default {
       coordinate: {
         lat: 0,
         lng: 0,
+      },
+      form: {
+        user_name: "",
+        user_bio: "",
+        user_phone: "",
+        user_lat: "",
+        user_lng: "",
+      },
+      form2: {
+        profileImage: {},
       },
       search: "",
       edit: false,
@@ -291,6 +338,9 @@ export default {
       "getUserFriendList",
       "logout",
       "getRoomById",
+      "patchImage",
+      "getUserById",
+      "editProfile",
     ]),
     ...mapMutations(["searchMutation"]),
     searchFriends() {
@@ -322,9 +372,9 @@ export default {
     getTheUserId() {
       console.log(this.user.user_id);
     },
-    editProfile() {
-      this.edit = true;
-    },
+    // editProfile() {
+    //   this.edit = true;
+    // },
     clickMarker(position) {
       console.log(position);
       console.log(position.latLng.lat());
@@ -355,8 +405,61 @@ export default {
       this.getRoomById(result);
     },
     handleFile(event) {
-      this.form.profileImage = event.target.files[0];
+      this.form2.profileImage = event.target.files[0];
       console.log(event.target.files);
+    },
+    updateImage() {
+      this.form2.profileImage = event.target.files[0];
+      const data = new FormData();
+      data.append("profileImage", this.form2.profileImage);
+      console.log(data);
+      const setData = {
+        user_id: this.user.user_id,
+        form: data,
+      };
+      this.patchImage(setData)
+        .then((response) => {
+          console.log(response);
+          this.$bvToast.toast(`${response.data.msg}`, {
+            title: "Status ",
+            variant: "success",
+            solid: true,
+          });
+          this.getUserById(this.user.user_id);
+        })
+        .catch((error) => {
+          console.log(error.response);
+          this.$bvToast.toast(`${error.response.data.msg}`, {
+            title: "Status ",
+            variant: "danger",
+            solid: true,
+          });
+        });
+    },
+    editProfileUser() {
+      const setData = {
+        user_id: this.user.user_id,
+        form: this.form,
+      };
+      console.log(setData);
+      this.editProfile(setData)
+        .then((response) => {
+          console.log(response);
+          this.$bvToast.toast(`${response.data.msg}`, {
+            title: "Info ",
+            variant: "info",
+            solid: true,
+          });
+          this.getUserById(this.user.user_id);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$bvToast.toast(`${error.response}`, {
+            title: "Info ",
+            variant: "danger",
+            solid: true,
+          });
+        });
     },
   },
 };
@@ -398,6 +501,23 @@ export default {
   width: 100%;
   cursor: pointer;
 }
+
+.profileImage {
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+}
+
+.editProfile {
+  text-align: center;
+}
+
+.imageEdit {
+  width: 10em;
+  height: 10em;
+  border-radius: 50%;
+}
+
 .container-header {
   font-size: 29px;
   color: #7e98df;
@@ -463,5 +583,9 @@ input[type="search"] {
   text-align: center;
 
   /* border-radius: 20px; */
+}
+
+input::placeholder {
+  font-size: 14px;
 }
 </style>

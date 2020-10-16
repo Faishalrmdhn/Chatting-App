@@ -133,19 +133,32 @@ export default {
       });
     },
     editProfile(context, payload) {
-      //API blm bener
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/user/", payload)
-          .then((res) => {
-            console.log(res);
-            console.log("done!");
-            context.commit("setRoomById", res);
-            resolve(res);
+          .patch(`http://localhost:3000/user/${payload.user_id}`, payload.form)
+          .then((response) => {
+            console.log(response);
+            resolve(response);
           })
-          .catch((err) => {
-            reject(err);
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    patchImage(context, payload) {
+
+      console.log(payload);
+      return new Promise((resolve, reject) => {
+        axios
+          .patch(`http://localhost:3000/user/image/${payload.user_id}`, payload.form)
+          .then((response) => {
+            console.log(response);
+
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
           });
       });
     },
