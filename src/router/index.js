@@ -6,6 +6,7 @@ import Register from "../views/auth/Register.vue";
 import Forgot from "../views/auth/Forgot.vue";
 import Main from "../views/Main.vue";
 import store from "../store/index";
+import Chat from '../views/chat.vue'
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,12 @@ const routes = [
     path: "/forgot",
     name: "Forgot",
     component: Forgot,
+    meta: { requiresVisitor: true },
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
     meta: { requiresVisitor: true },
   },
 ];

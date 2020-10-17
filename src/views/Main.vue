@@ -8,10 +8,12 @@
       > -->
       <b-row style="height: 100%" align-v="center">
         <b-col>
-          <p>Please select a chat to start messaging</p>
+          <!-- <p>Please select a chat to start messaging</p>
           <br />
           <img src="../assets/live-chat.png" alt=""
-        /></b-col>
+        /> -->
+          <Chat />
+        </b-col>
       </b-row>
       <!-- =====================If any friends chat room exist================================= -->
       <!-- <b-row style="height: 100%" align-v="center"
@@ -29,10 +31,12 @@
 <script>
 // import { mapGetters, mapActions, mapGetters } from "vuex";
 import Chatlist from "../components/Chatlist.vue";
+import Chat from "../components/Chat";
 export default {
   name: "Main",
   components: {
     Chatlist,
+    Chat,
   },
   data() {
     return {

@@ -44,13 +44,13 @@ export default {
     return {
       socket: io("http://localhost:3000"),
       user_name: "",
-      room: null,
+      // room: null,
       message: "",
       messages: [
-        {
-          username: "Isal",
-          message: this.message,
-        },
+        // {
+        //   username: "Isal",
+        //   message: this.message,
+        // },
       ],
       typing: false,
     };
@@ -63,40 +63,41 @@ export default {
     },
   },
   mounted() {
-    if (!this.$route.params.user_name) {
-      this.$router.push("/about");
-    }
+    // if (!this.$route.params.user_name) {
+    //   this.$router.push("/chat");
+    // }
     // proses get message axios
-    this.user_name = this.$route.params.user_name;
-    this.socket.emit("welcomeMessage", this.user_name);
+    // this.user_name = this.$route.params.user_name;
+    // this.socket.emit("welcomeMessage", this.user_name);
     this.socket.on("chatMessage", (data) => {
       this.messages.push(data);
     });
 
-    this.socket.on("typingMessage", (data) => {
-      this.typing = data;
-      console.log(data);
-    });
-
-    this.room = this.$route.params.room;
+    // this.socket.on("typingMessage", (data) => {
+    //   this.typing = data;
+    //   console.log(data);
+    // });
+    // this.room = this.$route.params.room;
   },
   methods: {
     sendMessage() {
-      //   const setData = {
-      //     username: this.user_name,
-      //     message: this.message
-      //   }
-      //   this.socket.emit('globalMessage', setData)
+      const setData = {
+        username: "isal",
+        message: this.message,
+      };
+      this.socket.emit("globalMessage", setData);
+      this.message = "";
+      // this.socket.emit("globalMessage", setData);
       //   this.socket.emit('privateMessage', setData)
       //   this.socket.emit('broadcastMessage', setData)
       // ======================================================
-      const setData = {
-        username: this.user_name,
-        message: this.message,
-        room: this.room,
-      };
-      this.socket.emit("roomMessage", setData);
-      this.message = "";
+      // const setData = {
+      //   username: this.user_name,
+      //   message: this.message,
+      //   room: this.room,
+      // };
+      // this.socket.emit("roomMessage", setData);
+      // this.message = "";
     },
   },
 };
