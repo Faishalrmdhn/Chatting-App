@@ -4,8 +4,6 @@ export default {
   state: {
     userList: [],
     userFriendList: [],
-    allRoom: [],
-    roomById: [],
     search: "",
     user: {},
     user_id: 0,
@@ -18,7 +16,7 @@ export default {
       state.search = payload;
     },
     setUserById(state, payload) {
-      console.log(payload.data.data[0].user_id);
+      // console.log(payload.data.data[0].user_id);
       state.user = payload.data.data[0];
       state.user_id = payload.data.data.user_id;
     },
@@ -27,16 +25,8 @@ export default {
       console.log(payload);
       state.userFriendList = payload.data.data;
     },
-    setAllRoom(state, payload) {
-      console.log("get all room");
-      console.log(payload);
-      state.allRoom = payload.data.data;
-    },
-    setRoomById(state, payload) {
-      console.log("room by id");
-      console.log(payload);
-      state.roomById = payload.data.data;
-    },
+
+
   },
   actions: {
     searchUserByEmail(context) {
@@ -100,38 +90,8 @@ export default {
           });
       });
     },
-    getAllRoom(context, payload) {
-      console.log(payload);
-      return new Promise((resolve, reject) => {
-        axios
-          .post("http://localhost:3000/room/chat", payload)
-          .then((res) => {
-            console.log(res);
-            console.log("done!");
-            context.commit("setAllRoom", res);
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
-    getRoomById(context, payload) {
-      console.log(payload);
-      return new Promise((resolve, reject) => {
-        axios
-          .post("http://localhost:3000/room/chat/by-id", payload)
-          .then((res) => {
-            console.log(res);
-            console.log("done!");
-            context.commit("setRoomById", res);
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
+
+
     editProfile(context, payload) {
       console.log(payload);
       return new Promise((resolve, reject) => {
@@ -147,7 +107,6 @@ export default {
       });
     },
     patchImage(context, payload) {
-
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
@@ -177,12 +136,6 @@ export default {
       console.log(state.userFriendList);
       return state.userFriendList;
     },
-    getAllRoom(state) {
-      console.log(state.allRoom);
-      return state.allRoom;
-    },
-    getRoomById(state) {
-      return state.roomById;
-    },
+
   },
 };

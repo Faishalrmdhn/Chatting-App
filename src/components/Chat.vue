@@ -3,6 +3,7 @@
   <b-row>
     <b-col cols="12">
       <div class="chat">
+        <div class="header-chat">target image</div>
         <div class="chat-window">
           <div class="output">
             <!-- <p v-if="typing">
@@ -55,20 +56,18 @@ export default {
   },
   mounted() {
     // console.log(this.$route.params)
-    // if (!this.$route.params.username) {
-    //   this.$router.push('/about')
-    // }
     // proses get message axios
     // this.getchat()
     // this.username = this.$route.params.username
     // this.room = this.$route.params.room
-    // this.socket.emit('welcomeMessage', {
-    //   username: 'BOT',
-    //   message: `Welcome Back ${this.username} !`
-    // })
+    this.socket.emit("welcomeMessage", {
+      username: "BOT",
+      message: `Welcome Back ${this.user.user_name} !`,
+    });
     this.socket.on("chatMessage", (data) => {
       this.messages.push(data);
     });
+
     // this.socket.on('typingMessage', data => {
     //   this.typing = data
     // })
@@ -82,9 +81,10 @@ export default {
       // GLOBAL = semua orang dapat melihat
       // PRIVATE = hanya kita saja yang dapat melihat
       // BRROADCAST = semua orang dapat melihat kecuali kita
-      this.socket.emit("globalMessage", setData);
+      // this.socket.emit("globalMessage", setData);
+
+      this.socket.emit("privateMessage", setData);
       this.message = "";
-      // this.socket.emit('privateMessage', setData)
       // this.socket.emit('broadcastMessage', setData)
       // =========================================================
       // const setData = {
@@ -148,6 +148,12 @@ h2 {
   height: 400px;
   overflow: auto;
   background: #f9f9f9;
+}
+
+.header-chat {
+  background-color: red;
+  width: 100%;
+  min-height: 70px;
 }
 
 .output p {

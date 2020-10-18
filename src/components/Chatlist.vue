@@ -1,6 +1,5 @@
 <template>
   <div class="content-wrapper">
-    <!-- <div><img :src="url_API + user.profileImage" alt="" /></div> -->
     <div class="outer-container">
       <div class="container-header">
         <div class="top">Telegram</div>
@@ -13,17 +12,25 @@
           <img src="../assets/Menu.png" alt="" />
         </div>
       </div>
-      <div
-        v-if="user.profileImage !== '' || user.profileImage !== undefined"
-        class="text-center"
-      >
-        <b-avatar size="3em"
-          ><img class="profileImage" :src="url_API + user.profileImage" alt=""
-        /></b-avatar>
+
+      <div class="text-center">
+        <div v-if="user.profileImage !== ''">
+          <img
+            class="profileImage"
+            :src="url_API + user.profileImage"
+            alt="image profile"
+          />
+        </div>
+        <div v-if="user.profileImage === ''">
+          <img
+            class="profileImage"
+            src="../assets/default.png"
+            alt="image default"
+          />
+        </div>
+        <!-- <div>{{ room }}</div> -->
       </div>
-      <div v-if="user.profileImage === ''" class="text-center">
-        <img style="max-width: 3em" src="../assets/account.png" alt="" />
-      </div>
+
       <div class="text">
         <h5>
           <strong> {{ user.user_name }}</strong>
@@ -40,21 +47,26 @@
         </div>
       </div>
       <div class="column">
-        <div><button class="button-option">All</button></div>
+        <div><button @click="getRoom" class="button-option">All</button></div>
         <div><button class="button-option">Unread</button></div>
         <div><button class="button-option">Read</button></div>
       </div>
-
+      <!-- <div>{{ roomById }}</div> -->
       <b-container style="over-flow: auto" fluid class="containerChatList px-0">
         <b-row
           class="text-center mb-2"
           align-h="between"
-          v-for="(value, index) in roomById"
+          v-for="(value, index) in allRoom"
           :key="index"
-          ><b-col
+          ><b-col v-if="value.profileImage !== ''"
             ><img
-              style="max-width: 2em"
-              src="../assets/tony.jpg"
+              style="height: 2em; width: 2em; border-radius: 50%"
+              :src="url_API + value.profileImage"
+              alt="user friend" /></b-col
+          ><b-col v-if="value.profileImage === ''">
+            <img
+              style="height: 2em; width: 2em; border-radius: 50%"
+              src="../assets/default.png"
               alt="" /></b-col
           ><b-col style="font-size: 18px; font-weight: 500"
             ><b-row>{{ value.user_name }}</b-row
@@ -93,9 +105,19 @@
             class="mt-3 text-center"
             v-for="(value, index) in friendList"
             :key="index"
-            ><b-col><b-avatar size="2em"></b-avatar></b-col
+          >
+            <b-col v-if="value.profileImage !== ''"
+              ><img
+                class="profileImage"
+                :src="url_API + value.profileImage"
+                alt="user friend" /></b-col
+            ><b-col v-if="value.profileImage === ''">
+              <img
+                class="profileImage"
+                src="../assets/default.png"
+                alt="" /></b-col
             ><b-col>{{ value.user_name }}</b-col
-            ><b-col @click="getRoomChatById(value.friend_id)"
+            ><b-col @click="createRoom(value.friend_id)"
               ><img src="../assets/Plus.png" alt="add friend"
             /></b-col>
           </b-row>
@@ -129,26 +151,24 @@
       </b-modal>
       <!-- ==============Modal search friend Ends================ -->
     </div>
-    <div v-show="edit" class="content-wrapper"></div>
-    <div>{{ user }}</div>
+
     <!-- =============================Modal sidebar========================== -->
     <b-sidebar id="editProfile" bg-variant="light" title="@wdlam" width="35%">
       <div class="px-3 py-2 text-center">
         <div>
-          <div
-            v-if="user.profileImage !== '' || user.profileImage !== undefined"
-            style="text-align: center"
-          >
+          <div v-if="user.profileImage !== ''">
             <img
               class="profileImage"
               :src="url_API + user.profileImage"
               alt="image profile"
             />
           </div>
-          <div
-            v-if="user.profileImage === '' || user.profileImage === undefined"
-          >
-            <img class="profileImage" src="../assets/default.png" alt="" />
+          <div v-if="user.profileImage === ''">
+            <img
+              class="profileImage"
+              src="../assets/default.png"
+              alt="image default"
+            />
           </div>
           <input
             type="file"
@@ -187,12 +207,21 @@
         <b-modal id="modalEditProfile" size="lg" hide-footer style>
           <template v-slot:modal-header>Edit Profile</template>
           <b-form @submit.prevent>
-            <div class="editProfile">
-              <img
-                :src="url_API + user.profileImage"
-                class="imageEdit"
-                alt=""
-              />
+            <div class="text-center">
+              <div v-if="user.profileImage !== ''">
+                <img
+                  class="editProfile"
+                  :src="url_API + user.profileImage"
+                  alt="image profile"
+                />
+              </div>
+              <div v-if="user.profileImage === ''">
+                <img
+                  class="editProfile"
+                  src="../assets/default.png"
+                  alt="image default"
+                />
+              </div>
             </div>
             <b-form-group style="mt-3" label="Name">
               <b-form-input
@@ -313,6 +342,7 @@ export default {
       user_id: "getUserId",
       allRoom: "getAllRoom",
       roomById: "getRoomById",
+      room: "getRoom",
     }),
   },
   created() {
@@ -328,10 +358,16 @@ export default {
       .catch((error) => {
         alert(error);
       });
-    // this.getRoomById();
+
+    // this.getAllRoom(this.user.user_id);
   },
+  // updated() {
+  //   this.getAllRoom(this.user.user_id);
+  // },
+
   methods: {
     ...mapActions([
+      "postRoomById",
       "getAllRoom",
       "searchUserByEmail",
       "inviteFriends",
@@ -359,12 +395,15 @@ export default {
             title: "Status :",
             autoHideDelay: 500,
             appendToast: true,
+            variant: "success",
           });
         })
         .catch((error) => {
-          this.$bvToast.toast(error.data.msg, {
+          console.log(error.response);
+          this.$bvToast.toast(error.response.data.msg, {
             title: "Status :",
             autoHideDelay: 500,
+            variant: "danger",
             appendToast: true,
           });
         });
@@ -388,47 +427,77 @@ export default {
       this.$bvModal.show("modalShowFriendList");
       this.getUserFriendList(this.user.user_id);
     },
-    getAllRoomChat(data) {
-      console.log(data);
+    getAllRoomChat() {
+      // console.log(data);
+      // const result = {
+      //   user_id: this.user.user_id,
+      //   friend_id: data,
+      // };
+      this.getAllRoom(this.user.user_id);
+    },
+    createRoom(data) {
       const result = {
         user_id: this.user.user_id,
         friend_id: data,
       };
-      this.getAllRoom(result);
+      this.postRoomById(result)
+        .then((response) => {
+          // console.log(response);
+          this.$bvToast.toast(`${response.data.msg}`, {
+            title: "Status :",
+            variant: "success",
+            solid: true,
+          });
+        })
+        .catch((error) => {
+          // console.log(error.response);
+          this.$bvToast.toast(`${error.response.data.msg}`, {
+            title: "Status : ",
+            variant: "danger",
+            solid: true,
+          });
+        });
     },
-    getRoomChatById(data) {
-      console.log(data);
-      const result = {
-        user_id: this.user.user_id,
-        friend_id: data,
-      };
-      this.getRoomById(result);
+    getRoom() {
+      // console.log(this.user.user_id);
+      this.getAllRoom(this.user.user_id);
     },
+    // getRoomChatById(data) {
+    //   console.log(data);
+    //   const result = {
+    //     user_id: this.user.user_id,
+    //     friend_id: data,
+    //   };
+    //   this.getRoomById(result);
+    // },
     handleFile(event) {
       this.form2.profileImage = event.target.files[0];
       console.log(event.target.files);
     },
     updateImage() {
       this.form2.profileImage = event.target.files[0];
+      // console.log(event.target.files[0]);
       const data = new FormData();
       data.append("profileImage", this.form2.profileImage);
-      console.log(data);
+      // console.log(data);
       const setData = {
         user_id: this.user.user_id,
         form: data,
       };
       this.patchImage(setData)
         .then((response) => {
-          console.log(response);
+          // console.log("masuk patch image");
+          // console.log(response);
           this.$bvToast.toast(`${response.data.msg}`, {
             title: "Status ",
             variant: "success",
             solid: true,
           });
+          console.log("success update image");
           this.getUserById(this.user.user_id);
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
           this.$bvToast.toast(`${error.response.data.msg}`, {
             title: "Status ",
             variant: "danger",
@@ -482,6 +551,7 @@ export default {
 .content-wrapper {
   font-family: "Rubik", sans-serif;
   /* color: ; */
+  width: 100%;
   padding: 10px;
   height: 100vh;
   background-color: white;
@@ -510,6 +580,9 @@ export default {
 
 .editProfile {
   text-align: center;
+  width: 8em;
+  height: 8em;
+  border-radius: 50%;
 }
 
 .imageEdit {
