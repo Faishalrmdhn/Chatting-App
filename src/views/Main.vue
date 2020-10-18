@@ -3,18 +3,7 @@
     <b-col sm="4" class="px-0"> <Chatlist /> </b-col
     ><b-col sm="8" class="px-0 right">
       <Chat />
-      <!-- <b-row class="headerChat" align-h="start">
-        <b-col sm="1" class="px-0"><b-avatar size="3em"></b-avatar></b-col
-        ><b-col sm="9"><b-row>Mother</b-row><b-row>Online</b-row></b-col></b-row
-      > -->
-      <!-- <b-row style="height: 100%" align-v="center">
-        <b-col> -->
-      <!-- <p>Please select a chat to start messaging</p>
-          <br />
-          <img src="../assets/live-chat.png" alt=""
-        /> -->
-      <!-- </b-col>
-      </b-row> -->
+
       <!-- =====================If any friends chat room exist================================= -->
       <!-- <b-row style="height: 100%" align-v="center"
         ><b-col

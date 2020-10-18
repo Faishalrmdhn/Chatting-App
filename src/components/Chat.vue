@@ -1,8 +1,7 @@
 <template>
-  <!-- <b-container class="bv-example-row"> -->
-  <b-row>
-    <b-col cols="12">
-      <div class="chat">
+  <b-row class="container">
+    <b-col>
+      <b-row class="chat">
         <div class="header-chat">target image</div>
         <div class="chat-window">
           <div class="output">
@@ -22,10 +21,9 @@
           placeholder="Message"
         />
         <button class="send" @click="sendMessage">Send</button>
-      </div>
+      </b-row>
     </b-col>
   </b-row>
-  <!-- </b-container> -->
 </template>
 
 <script>
@@ -119,15 +117,14 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+}
 .chat {
-  max-width: 600px;
+  max-width: 100%;
   border: 1px solid #ddd;
   box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
-}
-
-.room {
-  margin: 10px 0;
 }
 
 h2 {
