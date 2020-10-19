@@ -26,7 +26,7 @@ export default {
             console.log(payload);
             return new Promise((resolve, reject) => {
                 axios
-                    .post("http://localhost:3000/room/chat", { user_id: payload })
+                    .post("http://localhost:3000/room/all", { user_id: payload })
                     .then((res) => {
                         console.log(res);
                         console.log("done!");

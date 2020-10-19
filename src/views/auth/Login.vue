@@ -37,19 +37,6 @@
                 ></b-form-input>
               </b-form-group>
 
-              <!-- <b-form-group
-                  id="input-group-2"
-                  label="No. Hp:"
-                  label-for="input-2"
-                >
-                  <b-form-input
-                    id="input-2"
-                    type="email"
-                    required
-                    v-model="form.user_phone"
-                    placeholder="08xxxxxxxxxx"
-                  ></b-form-input>
-                </b-form-group> -->
               <b-row align-h="center" class="text-right">
                 <b-col>
                   <router-link to="/forgot">Forgot Password?</router-link>
@@ -60,20 +47,20 @@
                   <button class="button">Login</button>
                 </b-col>
               </b-row>
+            </b-form>
 
-              <b-row>
+                 <b-row>
                 <b-col>
                   <h6 class="sidelines"><span> Login with</span></h6>
                 </b-col>
               </b-row>
               <b-row class="text-center m-4">
                 <b-col>
-                  <button class="button">
+                  <button class="button" @click="$bvModal.show('modalComingSoon')">
                     <img src="../../assets/google.png" alt="" /> Google
                   </button>
                 </b-col>
               </b-row>
-            </b-form>
             <b-row class="text-center">
               <b-col>
                 Don't have an account?
@@ -84,6 +71,10 @@
         </b-col>
       </b-row>
     </b-col>
+    <b-modal  id="modalComingSoon">
+      <template v-slot:modal-header class="text-center"><h4>Coming Soon !</h4> </template>
+    <b-row><b-col>This feature will soon available </b-col></b-row>
+    </b-modal>
   </b-row>
 </template>
 
