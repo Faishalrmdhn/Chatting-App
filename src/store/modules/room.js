@@ -5,7 +5,9 @@ export default {
         allRoom: [],
         roomById: [],
         room: [],
-        chat:{}
+        chat:{},
+        nextRoomChats:{},
+        // dataChatMutation:{}
     },
     mutations: {
         setRoomById(state, payload) {
@@ -23,6 +25,11 @@ export default {
         },
         setChat(state, payload){
             state.chat = payload
+        },
+        setSocketdataMutation(state, payload){
+            state.nextRoomChats.push(payload)
+            console.log(payload)
+
         }
     },
     actions: {
@@ -87,6 +94,10 @@ export default {
                   reject(error.response.data.msg)
                 })
             ])
+          },
+        socketData(context, payload){
+            console.log(payload)
+            context.commit('setSocketdataMutation', payload)
           }
     },
     getters: {
@@ -100,5 +111,8 @@ export default {
         getRoom(state) {
             return state.room;
         },
+        getNextRoomChat(state){
+            return state.nextRoomChats
+        }
     }
 }

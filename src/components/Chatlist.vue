@@ -51,7 +51,6 @@
         <div><button class="button-option">Unread</button></div>
         <div><button class="button-option">Read</button></div>
       </div>
-      <!-- <div>{{ allRoom }}</div> -->
       <b-container style="over-flow: auto" fluid class="containerChatList px-0">
         <b-row
           class="text-center mb-2"
@@ -309,7 +308,8 @@
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
-// import Chatlist from "../components/Chatlist.vue";
+import io from "socket.io-client";
+
 export default {
   name: "Chatlist",
   components: {
@@ -318,6 +318,7 @@ export default {
   data() {
     return {
       url_API: process.env.VUE_APP_URL,
+      socket: io("http://localhost:3000"),
       coordinate: {
         lat: 0,
         lng: 0,
@@ -334,6 +335,7 @@ export default {
       },
       search: "",
       edit: false,
+      recentRoom: "",
     };
   },
   computed: {
@@ -345,6 +347,7 @@ export default {
       allRoom: "getAllRoom",
       // roomById: "getRoomByIdGetters",
       room: "getRoom",
+      // nextRoomChat: "getNextRoomChat",
     }),
   },
   created() {
@@ -363,9 +366,14 @@ export default {
 
     // this.getAllRoom(this.user.user_id);
   },
-  // updated() {
-  //   this.getAllRoom(this.user.user_id);
-  // },
+  mounted() {
+    // this.socket.on("chatMessage", (data) => {
+    //   this.socketData(data);
+    //   console.log(this.socketData(data));
+    //   console.log(this.socket);
+    //   console.log(data);
+    // });
+  },
 
   methods: {
     ...mapActions([
@@ -379,6 +387,7 @@ export default {
       "patchImage",
       "getUserById",
       "editProfile",
+      "socketData",
     ]),
     ...mapMutations(["searchMutation"]),
     searchFriends() {
@@ -411,6 +420,7 @@ export default {
         });
     },
     GetRoomChat(data) {
+      console.log(data);
       const setData = {
         user_id: data.user_id,
         friend_id: data.friend_id,
@@ -422,8 +432,17 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      console.log(data.user_id);
-      console.log(data.friend_id);
+
+      if (this.recentRoom) {
+        this.socket.emit("changeRoom", [data.room_chat_id, this.recentRoom]);
+        this.recentRoom = data.room_chat_id;
+        console.log("roombaru");
+      } else {
+        this.socket.emit("setRoom", data);
+        console.log(data);
+        this.recentRoom = data.room_chat_id;
+        console.log("room awal");
+      }
     },
     // },
     getTheUserId() {
@@ -480,14 +499,6 @@ export default {
       // console.log(this.user.user_id);
       this.getAllRoom(this.user.user_id);
     },
-    // getRoomChatById(data) {
-    //   console.log(data);
-    //   const result = {
-    //     user_id: this.user.user_id,
-    //     friend_id: data,
-    //   };
-    //   this.getRoomById(result);
-    // },
     handleFile(event) {
       this.form2.profileImage = event.target.files[0];
       console.log(event.target.files);

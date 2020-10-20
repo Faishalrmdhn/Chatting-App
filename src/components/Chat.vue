@@ -33,16 +33,21 @@
             <b-col class="output">
               <b-container>
                 <b-row
-                  ><b-col class="bubble">
+                  ><b-col>
                     <!-- <p v-if="typing">
                 <em>{{ typing }} is typing a message...</em>
               </p> -->
-                    <div>{{ messages }}</div>
-                    <p v-for="(value, index) in messages" :key="index">
-                      <strong>{{ value.username }} :</strong>
-                      {{ value.message }}
-                    </p></b-col
-                  ></b-row
+                    <div
+                      class="bubble"
+                      v-for="(value, index) in messages"
+                      :key="index"
+                    >
+                      <p>
+                        <strong>{{ value.username }} :</strong>
+                        {{ value.message }}
+                      </p>
+                    </div>
+                  </b-col></b-row
                 >
               </b-container>
             </b-col>
@@ -85,6 +90,7 @@ export default {
   name: "Chat",
   data() {
     return {
+      wadah: {},
       socket: io("http://localhost:3000"),
       username: "",
       room: "",
@@ -108,6 +114,7 @@ export default {
       friendList: "getFriendList",
       friend: "getFriend",
       roomById: "getRoomByIdGetters",
+      nextRoomChat: "getNextRoomChat",
     }),
   },
   mounted() {
@@ -119,9 +126,8 @@ export default {
     // });
     this.socket.on("chatMessage", (data) => {
       this.messages.push(data);
+      console.log(data);
     });
-    console.log("created!");
-    console.log(this.message);
     // this.socket.on('typingMessage', data => {
     //   this.typing = data
     // })
@@ -150,6 +156,7 @@ export default {
       // this.socket.emit('roomMessage', setData)
       // // [2] menjalankan proses axios post data message untuk menyimpan data ke dalam database
       // // ........
+
       this.socket.emit("roomMessage", setData);
       console.log(setData);
       this.message = "";
