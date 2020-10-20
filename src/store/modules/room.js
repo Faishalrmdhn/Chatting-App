@@ -4,7 +4,8 @@ export default {
     state: {
         allRoom: [],
         roomById: [],
-        room: []
+        room: [],
+        chat:{}
     },
     mutations: {
         setRoomById(state, payload) {
@@ -19,6 +20,9 @@ export default {
         },
         setPostRoom(state, payload) {
             state.room = payload.data.data
+        },
+        setChat(state, payload){
+            state.chat = payload
         }
     },
     actions: {
@@ -70,13 +74,27 @@ export default {
                     });
             });
         },
+        postChat(context, payload) {
+            return new Promise((resolve, reject) => [
+              axios
+                .post('http://localhost:3000/room/chatting', payload)
+                .then(response => {
+                  console.log(response.data)
+                  context.commit('setChat', response.data.data)
+                  resolve(response)
+                })
+                .catch(error => {
+                  reject(error.response.data.msg)
+                })
+            ])
+          }
     },
     getters: {
         getAllRoom(state) {
             console.log(state.allRoom);
             return state.allRoom;
         },
-        getRoomById(state) {
+        getRoomByIdGetters(state) {
             return state.roomById;
         },
         getRoom(state) {

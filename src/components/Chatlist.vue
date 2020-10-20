@@ -51,7 +51,7 @@
         <div><button class="button-option">Unread</button></div>
         <div><button class="button-option">Read</button></div>
       </div>
-      <!-- <div>{{ roomById }}</div> -->
+      <!-- <div>{{ allRoom }}</div> -->
       <b-container style="over-flow: auto" fluid class="containerChatList px-0">
         <b-row
           class="text-center mb-2"
@@ -68,7 +68,9 @@
               style="height: 2em; width: 2em; border-radius: 50%"
               src="../assets/default.png"
               alt="" /></b-col
-          ><b-col style="font-size: 18px; font-weight: 500"
+          ><b-col
+            style="font-size: 18px; font-weight: 500"
+            @click="GetRoomChat(value)"
             ><b-row>{{ value.user_name }}</b-row
             ><b-row style="color: grey; font-size: 14px; font-weight: 400"
               >Why did you do that?</b-row
@@ -341,7 +343,7 @@ export default {
       user: "user",
       user_id: "getUserId",
       allRoom: "getAllRoom",
-      roomById: "getRoomById",
+      // roomById: "getRoomByIdGetters",
       room: "getRoom",
     }),
   },
@@ -408,6 +410,22 @@ export default {
           });
         });
     },
+    GetRoomChat(data) {
+      const setData = {
+        user_id: data.user_id,
+        friend_id: data.friend_id,
+      };
+      this.getRoomById(setData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log(data.user_id);
+      console.log(data.friend_id);
+    },
+    // },
     getTheUserId() {
       console.log(this.user.user_id);
     },

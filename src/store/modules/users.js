@@ -7,6 +7,7 @@ export default {
     search: "",
     user: {},
     user_id: 0,
+    friend:[]
   },
   mutations: {
     setUser(state, payload) {
@@ -25,7 +26,9 @@ export default {
       console.log(payload);
       state.userFriendList = payload.data.data;
     },
-
+    setFriendById(state, payload){
+      state.friend = payload.data.data
+    }
 
   },
   actions: {
@@ -90,8 +93,22 @@ export default {
           });
       });
     },
-
-
+    getFriendById(context, payload) {
+      console.log(payload);
+      return new Promise((resolve, reject) => {
+        axios
+          .get("http://localhost:3000/friend/", payload)
+          .then((res) => {
+            console.log(res);
+            context.commit("setFriendById", res);
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+            // console.log(err);
+          });
+      });
+    },
     editProfile(context, payload) {
       console.log(payload);
       return new Promise((resolve, reject) => {
@@ -136,6 +153,9 @@ export default {
       console.log(state.userFriendList);
       return state.userFriendList;
     },
+    getFriend(state){
+      return state.friend
+    }
 
   },
 };
