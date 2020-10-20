@@ -4,8 +4,8 @@ import router from "../../router/index";
 export default {
   state: {
     user: {},
-    // user_id: 0,
     token: localStorage.getItem("token") || null,
+    urlAPI: process.env.VUE_APP_URL
   },
   mutations: {
     setUser(state, payload) {
@@ -23,7 +23,7 @@ export default {
     login(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/user/login", payload)
+          .post(`${context.state.urlAPI}user/login`, payload)
           .then((response) => {
             console.log(response);
             context.commit("setUser", response.data.data);
@@ -38,7 +38,7 @@ export default {
     register(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/user/register", payload)
+          .post(`${context.state.urlAPI}user/register`, payload)
           .then((response) => {
             console.log(response.data);
             resolve(response.data);
@@ -96,7 +96,7 @@ export default {
     forgotPassword(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/user/forgot-password", payload)
+          .post(`${context.state.urlAPI}user/forgot-password`, payload)
           .then((response) => {
             console.log("dibawah ini");
             console.log(response);

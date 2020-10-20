@@ -35,7 +35,7 @@
         <h5>
           <strong> {{ user.user_name }}</strong>
         </h5>
-        <p>@wdiam</p>
+        <p>{{ user.user_email }}</p>
       </div>
       <div class="search">
         <div style="margin-right: 10px">
@@ -53,6 +53,7 @@
       </div>
       <b-container style="over-flow: auto" fluid class="containerChatList px-0">
         <b-row
+          style="cursor: pointer"
           class="text-center mb-2"
           align-h="between"
           v-for="(value, index) in allRoom"
@@ -154,7 +155,7 @@
     </div>
 
     <!-- =============================Modal sidebar========================== -->
-    <b-sidebar id="editProfile" bg-variant="light" title="@wdlam" width="35%">
+    <b-sidebar id="editProfile" bg-variant="light" title="Settings" width="35%">
       <div class="px-3 py-2 text-center">
         <div>
           <div v-if="user.profileImage !== ''">
@@ -182,7 +183,7 @@
           </h6>
         </div>
         <h6>{{ user.user_name }}</h6>
-        <p>@wdlam</p>
+        <p>{{ user.user_email }}</p>
 
         <div class="edit-option"><h5>Account</h5></div>
         <hr />
@@ -192,7 +193,7 @@
         </div>
 
         <div class="edit-option">
-          @Wdlam
+          {{ user.user_name }}
           <p>username</p>
         </div>
 
@@ -363,8 +364,6 @@ export default {
       .catch((error) => {
         alert(error);
       });
-
-    // this.getAllRoom(this.user.user_id);
   },
   mounted() {
     // this.socket.on("chatMessage", (data) => {

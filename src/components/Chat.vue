@@ -1,10 +1,14 @@
 <template>
   <b-row class="container">
-    <b-col cols="12" md="12" lg="12">
+    <b-col style="padding: 0px" cols="12" md="12" lg="12">
       <b-row class="chat"
-        ><b-col>
-          <div>{{ roomById[0].room_chat_id }}</div>
-          <b-row class="header-chat" align-h="between" align-v="center">
+        ><b-col style="width: 100%" class="m-0 p-0">
+          <b-row
+            style="width: 100%"
+            class="header-chat"
+            align-h="between"
+            align-v="center"
+          >
             <b-col
               @click="$bvModal.show('modalFriendProfile')"
               style="cursor: pointer"
@@ -69,14 +73,81 @@
         </b-col>
       </b-row>
     </b-col>
-    <b-modal id="modalFriendProfile" size="lg" hide-footer style>
-      <template v-slot:modal-header><h4>Friends Profile</h4></template>
+    <b-modal id="modalFriendProfile" size="lg" hide-header hide-footer style>
       <b-row
-        ><b-col cols="12">
+        ><b-col xs="12" sm="12" md="12" lg="12" xl="12" cols="12">
           <b-row
-            ><h5>{{ roomById[0].user_name }}</h5></b-row
+            ><b-col
+              @click="$bvModal.hide('modalFriendProfile')"
+              style="cursor: pointer"
+              ><img src="../assets/back.png" alt=""
+            /></b-col>
+          </b-row>
+          <b-row class="text-center"
+            ><b-col>
+              <div v-if="roomById[0].profileImage !== ''">
+                <img
+                  class="friendImage"
+                  :src="url_API + roomById[0].profileImage"
+                  alt="friend image"
+                />
+              </div>
+              <div v-if="roomById[0].profileImage === ''">
+                <img
+                  class="friendImage"
+                  src="../assets/default.png"
+                  alt="friend image"
+                /></div></b-col
+          ></b-row>
+          <b-row class="text-center"
+            ><b-col>
+              <h5>{{ roomById[0].user_name }}</h5>
+              <p>Online</p></b-col
+            >
+          </b-row>
+          <b-row
+            ><b-col
+              ><h5>Phone Number</h5>
+              <p>soon</p></b-col
+            >
+          </b-row>
+          <b-row align-h="around"
+            ><b-col cols="4"
+              ><b-button @click="onLoc" pill>Location</b-button></b-col
+            ><b-col cols="4"
+              ><b-button @click="onImg" pill>Image</b-button></b-col
+            ><b-col cols="4"
+              ><b-button @click="onDoc" pill>Document</b-button></b-col
+            ></b-row
           >
-          <b-row>body section</b-row> <b-row>footer section</b-row>
+          <b-row class="mt-4 text-left" align-h="center"
+            ><b-col cols="12" v-show="isLoc" style="text-align: center">
+              <h5>{{ roomById[0].user_name }}'s Location</h5>
+
+              <GmapMap
+                :center="coordinate"
+                :zoom="15"
+                map-type-id="terrain"
+                style="
+                  width: 400px;
+                  height: 275px;
+                  position: relative;
+                  left: 25%;
+                "
+              >
+                <GmapMarker
+                  :position="coordinate"
+                  @click="clickMarker"
+                  :clickable="true"
+                  :draggable="true"
+                  icon="https://img.icons8.com/color/48/000000/map-pin.png"
+                /> </GmapMap></b-col
+            ><b-col v-show="isImg" cols="12"
+              ><h5>This feature available soon!</h5></b-col
+            ><b-col v-show="isDoc" cols="12"
+              ><h5>This feature available soon!</h5></b-col
+            ></b-row
+          >
         </b-col></b-row
       >
     </b-modal>
@@ -98,6 +169,13 @@ export default {
       message: "",
       messages: [],
       url_API: process.env.VUE_APP_URL,
+      isLoc: true,
+      isImg: false,
+      isDoc: false,
+      coordinate: {
+        lat: 0,
+        lng: 0,
+      },
       // typing: false // false || 'nama si pengetik'
     };
   },
@@ -108,6 +186,20 @@ export default {
   //       : this.socket.emit("typing", false);
   //   },
   // },
+  created() {
+    this.$getLocation()
+      .then((coordinates) => {
+        this.coordinate = {
+          lat: coordinates.lat,
+          lng: coordinates.lng,
+        };
+        console.log(coordinates.lat);
+        console.log(coordinates.lng);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  },
   computed: {
     ...mapGetters({
       user: "user",
@@ -161,6 +253,21 @@ export default {
       console.log(setData);
       this.message = "";
     },
+    onLoc() {
+      this.isLoc = true;
+      this.isImg = false;
+      this.isDoc = false;
+    },
+    onImg() {
+      this.isLoc = false;
+      this.isImg = true;
+      this.isDoc = false;
+    },
+    onDoc() {
+      this.isLoc = false;
+      this.isImg = false;
+      this.isDoc = true;
+    },
     // selectRoom(data) {
     //   if (this.oldRoom) {
     //     // console.log('sudah pernah klik room ' + this.oldRoom);
@@ -186,10 +293,7 @@ export default {
   width: 100%;
 }
 .chat {
-  max-width: 100%;
-  border: 1px solid #ddd;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.05);
-  border-radius: 2px;
+  width: 100%;
 }
 
 h2 {
@@ -213,9 +317,10 @@ h2 {
 }
 
 .header-chat {
-  background-color: #fafafa;
+  background-color: white;
   width: 100%;
   min-height: 70px;
+  margin: 0px;
 }
 
 .output p {
@@ -279,5 +384,12 @@ button {
   width: 3em;
   height: 3em;
   border-radius: 50%;
+}
+
+.friendImage {
+  text-align: center;
+  width: 8em;
+  height: 8em;
+  border-radius: 30%;
 }
 </style>

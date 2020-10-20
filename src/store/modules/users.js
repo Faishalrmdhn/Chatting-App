@@ -7,7 +7,8 @@ export default {
     search: "",
     user: {},
     user_id: 0,
-    friend:[]
+    friend:[],
+    urlAPI: process.env.VUE_APP_URL
   },
   mutations: {
     setUser(state, payload) {
@@ -35,7 +36,7 @@ export default {
     searchUserByEmail(context) {
       axios
         .get(
-          `http://localhost:3000/user/search/email?user_email=${context.state.search}`
+          `${context.state.urlAPI}user/search/email?user_email=${context.state.search}`
         )
         .then((response) => {
           context.commit("setUser", response.data);
@@ -49,7 +50,7 @@ export default {
     getUserById(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .get(`http://localhost:3000/user/${payload}`)
+          .get(`${context.state.urlAPI}user/${payload}`)
           .then((res) => {
             // console.log(res);
             context.commit("setUserById", res);
@@ -63,7 +64,7 @@ export default {
     inviteFriends(context, payload) {
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/friend/invite", payload)
+          .post(`${context.state.urlAPI}friend/invite`, payload)
           .then((response) => {
             // console.log(payload);
             // console.log(response);
@@ -79,7 +80,7 @@ export default {
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
-          .post("http://localhost:3000/user/search/friendlist", {
+          .post(`${context.state.urlAPI}user/search/friendlist`, {
             user_id: payload,
           })
           .then((res) => {
@@ -97,7 +98,7 @@ export default {
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
-          .get("http://localhost:3000/friend/", payload)
+          .get(`${context.state.urlAPI}friend/`, payload)
           .then((res) => {
             console.log(res);
             context.commit("setFriendById", res);
@@ -113,7 +114,7 @@ export default {
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
-          .patch(`http://localhost:3000/user/${payload.user_id}`, payload.form)
+          .patch(`${context.state.urlAPI}user/${payload.user_id}`, payload.form)
           .then((response) => {
             console.log(response);
             resolve(response);
@@ -127,7 +128,7 @@ export default {
       console.log(payload);
       return new Promise((resolve, reject) => {
         axios
-          .patch(`http://localhost:3000/user/image/${payload.user_id}`, payload.form)
+          .patch(`${context.state.urlAPI}user/image/${payload.user_id}`, payload.form)
           .then((response) => {
             console.log(response);
 

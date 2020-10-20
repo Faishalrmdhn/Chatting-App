@@ -1,5 +1,5 @@
 <template>
-  <b-row fluid align-v="center">
+  <b-row fluid align-v="center" align-h="between">
     <b-col sm="4" class="px-0"> <Chatlist /> </b-col
     ><b-col sm="8" class="px-0 right">
       <Chat />

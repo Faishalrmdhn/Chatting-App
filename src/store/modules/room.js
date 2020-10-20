@@ -7,7 +7,7 @@ export default {
         room: [],
         chat:{},
         nextRoomChats:{},
-        // dataChatMutation:{}
+        urlAPI : process.env.VUE_APP_URL
     },
     mutations: {
         setRoomById(state, payload) {
@@ -37,7 +37,7 @@ export default {
             console.log(payload);
             return new Promise((resolve, reject) => {
                 axios
-                    .post("http://localhost:3000/room/all", { user_id: payload })
+                    .post(`${context.state.urlAPI}room/all`, { user_id: payload })
                     .then((res) => {
                         console.log(res);
                         console.log("done!");
@@ -53,7 +53,7 @@ export default {
             console.log(payload);
             return new Promise((resolve, reject) => {
                 axios
-                    .post("http://localhost:3000/room/chat/by-id", payload)
+                    .post(`${context.state.urlAPI}room/chat/by-id`, payload)
                     .then((res) => {
                         console.log(res);
                         console.log("done!");
@@ -69,7 +69,7 @@ export default {
             console.log(payload);
             return new Promise((resolve, reject) => {
                 axios
-                    .post("http://localhost:3000/room/post", payload)
+                    .post(`${context.state.urlAPI}room/post`, payload)
                     .then((res) => {
                         console.log(res);
                         console.log("done post room");
@@ -84,7 +84,7 @@ export default {
         postChat(context, payload) {
             return new Promise((resolve, reject) => [
               axios
-                .post('http://localhost:3000/room/chatting', payload)
+                .post(`${context.state.urlAPI}room/chatting`, payload)
                 .then(response => {
                   console.log(response.data)
                   context.commit('setChat', response.data.data)
