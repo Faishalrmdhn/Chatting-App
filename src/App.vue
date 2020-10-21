@@ -44,7 +44,7 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 } */
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap");
 html,
 body {
   font-family: "Rubik", sans-serif;

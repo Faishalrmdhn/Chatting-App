@@ -139,6 +139,22 @@ export default {
           });
       });
     },
+    //===================================delete image under process==================//
+    deleteImageUser(context, payload) {
+      console.log(payload);
+      return new Promise((resolve, reject) => {
+        axios
+          .delete(`${context.state.urlAPI}user/image/delete/${payload.user_id}`)
+          .then((response) => {
+            console.log(response);
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+        //===================================delete image under process==================//
   },
   getters: {
     getUserList(state) {

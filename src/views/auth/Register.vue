@@ -1,19 +1,19 @@
 <template>
-  <b-row class="register " fluid align-h="center">
+  <b-row class="register" fluid align-h="center">
     <b-col sm="6" class="container">
       <b-alert :show="alert" class="m-3" variant="danger">
         {{ isMsg }}
       </b-alert>
       <b-row class="content" align-h="center">
-        <b-col md="10" class="card">
+        <b-col md="10" class="card p-3">
           <div class="text-left">
-            <h3 class="text-center" style="color:#7e98df; font-weight:500;">
+            <h3 class="text-center" style="color: #7e98df; font-weight: 500">
               Register
             </h3>
             <p><strong> Let's create your account!</strong></p>
 
             <b-form
-              style="color:grey;"
+              style="color: grey"
               @submit.prevent="onSubmit"
               @reset.prevent="onReset"
             >
@@ -68,9 +68,7 @@
 
               <b-row class="text-center m-4">
                 <b-col>
-                  <button class="button">
-                    Register
-                  </button>
+                  <button class="button">Register</button>
                 </b-col>
               </b-row>
 
@@ -90,9 +88,7 @@
             <b-row class="text-center">
               <b-col>
                 Don't have an account?
-                <router-link to="/register">
-                  Sign up
-                </router-link>
+                <router-link to="/register"> Sign up </router-link>
               </b-col>
             </b-row>
           </div>

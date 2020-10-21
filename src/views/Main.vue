@@ -28,14 +28,7 @@ export default {
     Chat,
   },
   data() {
-    return {
-      // coordinate: {
-      //   lat: 0,
-      //   lng: 0,
-      // },
-      // search: "",
-      // edit: false,
-    };
+    return {};
   },
   computed: {
     // ...mapGetters({
@@ -47,19 +40,7 @@ export default {
     //   roomById: "getRoomById",
     // }),
   },
-  created() {
-    // this.$getLocation()
-    //   .then((coordinates) => {
-    //     this.coordinate = {
-    //       lat: coordinates.lat,
-    //       lng: coordinates.lng,
-    //     };
-    //   })
-    //   .catch((error) => {
-    //     alert(error);
-    //   });
-    // this.getRoomById();
-  },
+  created() {},
   methods: {
     // ...mapActions([
     //   "getAllRoom",

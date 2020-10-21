@@ -167,7 +167,7 @@ export default {
       room: "",
       // oldRoom: '',
       message: "",
-      messages: [],
+      // messages: [],
       url_API: process.env.VUE_APP_URL,
       isLoc: true,
       isImg: false,
@@ -207,6 +207,7 @@ export default {
       friend: "getFriend",
       roomById: "getRoomByIdGetters",
       nextRoomChat: "getNextRoomChat",
+      messages: "getMessages",
     }),
   },
   mounted() {
@@ -216,10 +217,6 @@ export default {
     //   username: "BOT",
     //   message: `Welcome Back ${this.user.user_name} !`,
     // });
-    this.socket.on("chatMessage", (data) => {
-      this.messages.push(data);
-      console.log(data);
-    });
     // this.socket.on('typingMessage', data => {
     //   this.typing = data
     // })

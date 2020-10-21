@@ -5,7 +5,7 @@
         {{ isMsg }}
       </b-alert>
       <b-row class="content" align-h="center" align-v="center">
-        <b-col md="10" class="card">
+        <b-col md="10" class="card p-3">
           <div class="text-left">
             <h3 class="text-center" style="color: #7e98df; font-weight: 500">
               Login
@@ -13,28 +13,36 @@
             <p><strong> Hi, Welcome back!</strong></p>
 
             <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
-              <b-form-group label="Email">
-                <b-form-input
+              <b-form-group style="color: grey" label="Email">
+                <input
                   type="email"
                   id="input-1"
                   required
                   placeholder="Enter email"
                   v-model="form.user_email"
-                ></b-form-input>
+                />
+                <!-- <b-form-input
+                  type="email"
+                  id="input-1"
+                  required
+                  placeholder="Enter email"
+                  v-model="form.user_email"
+                ></b-form-input> -->
               </b-form-group>
 
               <b-form-group
+                style="color: grey"
                 id="input-group-3"
                 label="Your Password:"
                 label-for="input-3"
               >
-                <b-form-input
+                <input
                   id="input-3"
                   type="password"
                   required
                   v-model="form.user_password"
                   placeholder="Enter password"
-                ></b-form-input>
+                />
               </b-form-group>
 
               <b-row align-h="center" class="text-right">
@@ -49,18 +57,21 @@
               </b-row>
             </b-form>
 
-                 <b-row>
-                <b-col>
-                  <h6 class="sidelines"><span> Login with</span></h6>
-                </b-col>
-              </b-row>
-              <b-row class="text-center m-4">
-                <b-col>
-                  <button class="button" @click="$bvModal.show('modalComingSoon')">
-                    <img src="../../assets/google.png" alt="" /> Google
-                  </button>
-                </b-col>
-              </b-row>
+            <b-row>
+              <b-col>
+                <h6 class="sidelines"><span> Login with</span></h6>
+              </b-col>
+            </b-row>
+            <b-row class="text-center m-4">
+              <b-col>
+                <button
+                  class="button"
+                  @click="$bvModal.show('modalComingSoon')"
+                >
+                  <img src="../../assets/google.png" alt="" /> Google
+                </button>
+              </b-col>
+            </b-row>
             <b-row class="text-center">
               <b-col>
                 Don't have an account?
@@ -71,9 +82,11 @@
         </b-col>
       </b-row>
     </b-col>
-    <b-modal  id="modalComingSoon">
-      <template v-slot:modal-header class="text-center"><h4>Coming Soon !</h4> </template>
-    <b-row><b-col>This feature will soon available </b-col></b-row>
+    <b-modal id="modalComingSoon">
+      <template v-slot:modal-header class="text-center"
+        ><h4>Coming Soon !</h4>
+      </template>
+      <b-row><b-col>This feature will soon available </b-col></b-row>
     </b-modal>
   </b-row>
 </template>
@@ -147,6 +160,23 @@ export default {
   background-color: white;
   border-radius: 30px;
   height: 90%;
+}
+
+input {
+  width: 100%;
+  height: 65px;
+  border: 1px solid rgba(169, 169, 169, 0.6);
+
+  border-radius: 10px;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) center
+    bottom 5px / calc(100% - 10px) 2px no-repeat;
+
+  border: 1px solid transparent;
+  margin: 5px;
+}
+
+::placeholder {
+  font-size: 14px;
 }
 
 .button {

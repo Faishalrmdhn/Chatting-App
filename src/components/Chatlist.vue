@@ -178,10 +178,32 @@
             @change="updateImage"
             style="display: none"
           />
-          <h6 @click="$refs.file.click()" style="cursor: pointer">
+          <span @click="$refs.file.click()" style="cursor: pointer">
             <b-icon icon="pencil-square"></b-icon>
-          </h6>
+          </span>
+          <span @click="$bvModal.show('modalDelete')" style="cursor: pointer"
+            ><b-icon icon="trash"></b-icon
+          ></span>
         </div>
+        <b-modal hide-footer style id="modalDelete"
+          ><template v-slot:modal-header
+            ><h5>Are you sure want to delete image?</h5></template
+          ><b-row
+            ><b-col cols="6">
+              <b-button
+                block
+                @click="$bvModal.hide('modalDelete')"
+                variant="warning"
+                >Cancel</b-button
+              ></b-col
+            >
+            <b-col cols="6"
+              ><b-button block variant="danger" @click.prevent="deleteImage()">
+                Delete</b-button
+              ></b-col
+            ></b-row
+          >
+        </b-modal>
         <h6>{{ user.user_name }}</h6>
         <p>{{ user.user_email }}</p>
 
@@ -348,6 +370,7 @@ export default {
       allRoom: "getAllRoom",
       // roomById: "getRoomByIdGetters",
       room: "getRoom",
+      messages: "getMessages",
       // nextRoomChat: "getNextRoomChat",
     }),
   },
@@ -372,6 +395,10 @@ export default {
     //   console.log(this.socket);
     //   console.log(data);
     // });
+    this.socket.on("chatMessage", (data) => {
+      this.setMessages(data);
+      console.log(data);
+    });
   },
 
   methods: {
@@ -387,8 +414,9 @@ export default {
       "getUserById",
       "editProfile",
       "socketData",
+      "deleteImageUser",
     ]),
-    ...mapMutations(["searchMutation"]),
+    ...mapMutations(["searchMutation", "setMessages"]),
     searchFriends() {
       this.searchMutation(this.search);
       this.searchUserByEmail();
@@ -533,6 +561,21 @@ export default {
           });
         });
     },
+    deleteImage() {
+      const setData = {
+        user_id: this.user.user_id,
+      };
+      console.log(setData);
+      this.deleteImageUser(setData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.$bvModal.hide("modalDelete");
+      this.getUserById(this.user.user_id);
+    },
     editProfileUser() {
       const setData = {
         user_id: this.user.user_id,
@@ -566,6 +609,7 @@ export default {
 .headerChat {
   padding: 7px 10px;
   background-color: white;
+  color: #7e98df;
 }
 
 .right {

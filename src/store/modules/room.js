@@ -7,7 +7,8 @@ export default {
         room: [],
         chat:{},
         nextRoomChats:{},
-        urlAPI : process.env.VUE_APP_URL
+        urlAPI : process.env.VUE_APP_URL,
+        messages: []
     },
     mutations: {
         setRoomById(state, payload) {
@@ -29,7 +30,9 @@ export default {
         setSocketdataMutation(state, payload){
             state.nextRoomChats.push(payload)
             console.log(payload)
-
+        },
+        setMessages(state, payload){
+            state.messages.push(payload)
         }
     },
     actions: {
@@ -98,7 +101,9 @@ export default {
         socketData(context, payload){
             console.log(payload)
             context.commit('setSocketdataMutation', payload)
-          }
+          },
+
+
     },
     getters: {
         getAllRoom(state) {
@@ -113,6 +118,9 @@ export default {
         },
         getNextRoomChat(state){
             return state.nextRoomChats
+        },
+        getMessages(state){
+            return state.messages
         }
     }
 }
