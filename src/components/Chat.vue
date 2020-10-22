@@ -1,8 +1,26 @@
 <template>
   <b-row class="container">
+    <!-- ===========================================
+    <div>\\\\\\\\\\\\\\{{ lastMessage }}////////////////////</div>
+    <div>**************{{ user }}>**************</div>
+    <div>{{ roomById[0] }}</div>
+    <div>
+      iniiiiiiiiiiiiiiiiiiiiiii <br />
+      {{ messages }}
+    </div>
+    <hr />
+    <div>messageshistory ==== {{ messagesHistory.chat }}==========</div>
+    <br />
+    <div v-for="(value, index) in messagesHistory.chat" :key="index">
+      <div>{{ value.chat }}</div>
+    <div>222222222</div>
+    </div> -->
+
+    <!-- <div v-if=""></div> -->
+    <!-- =========================================== -->
     <b-col style="padding: 0px" cols="12" md="12" lg="12">
-      <b-row class="chat"
-        ><b-col style="width: 100%" class="m-0 p-0">
+      <b-row class="chat">
+        <b-col style="width: 100%" class="m-0 p-0">
           <b-row
             style="width: 100%"
             class="header-chat"
@@ -42,13 +60,37 @@
                 <em>{{ typing }} is typing a message...</em>
               </p> -->
                     <div
-                      class="bubble"
+                      v-for="(value, index) in messagesHistory.chat"
+                      :key="index"
+                      class="bubble-wrap"
+                    >
+                      <!-- user -->
+                      <div
+                        v-if="user.user_id === value.user_id"
+                        class="bubble-right"
+                      >
+                        <p>
+                          <strong>{{ user.user_name }} :</strong>
+                          {{ value.chat }}
+                        </p>
+                      </div>
+                      <!-- sender -->
+                      <div v-if="user.user_id !== value.user_id" class="bubble">
+                        <p>
+                          <strong>{{ value.sender }} :</strong>
+                          {{ value.chat }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div
+                      class="bubble-send"
                       v-for="(value, index) in messages"
                       :key="index"
                     >
                       <p>
                         <strong>{{ value.username }} :</strong>
-                        {{ value.message }}
+                        {{ value.chat }}
                       </p>
                     </div>
                   </b-col></b-row
@@ -199,6 +241,7 @@ export default {
       .catch((error) => {
         alert(error);
       });
+    // this.lastMessage
   },
   computed: {
     ...mapGetters({
@@ -208,6 +251,8 @@ export default {
       roomById: "getRoomByIdGetters",
       nextRoomChat: "getNextRoomChat",
       messages: "getMessages",
+      messagesHistory: "getMessagesHistory",
+      lastMessage: "getLastMessages",
     }),
   },
   mounted() {
@@ -224,31 +269,38 @@ export default {
   methods: {
     ...mapActions(["postChat"]),
     sendMessage() {
-      // const setData = {
-      //   username: this.user.user_name,
-      //   message: this.message,
-      // };
-      // GLOBAL = semua orang dapat melihat
-      // PRIVATE = hanya kita saja yang dapat melihat
-      // BRROADCAST = semua orang dapat melihat kecuali kita
-      // this.socket.emit("globalMessage", setData);
-
-      // this.socket.emit("globalMessage", setData);
-      // this.socket.emit('broadcastMessage', setData)
-      // =========================================================
       const setData = {
         username: this.user.user_name,
-        message: this.message,
-        room: this.roomById[0].room_chat_id,
+        user_id: this.user.user_id,
+        friend_id: this.roomById[0].friend_id,
+        chat: this.message,
+        // room: this.roomById[0].room_chat_id,
+        room_chat_id: this.roomById[0].room_chat_id,
       };
       // [1] menjalankan scoket io untuk mendapatkan realtimenya
       // this.socket.emit('roomMessage', setData)
       // // [2] menjalankan proses axios post data message untuk menyimpan data ke dalam database
       // // ........
-
       this.socket.emit("roomMessage", setData);
       console.log(setData);
       this.message = "";
+
+      this.postChat(setData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    clickMarker(position) {
+      console.log(position);
+      console.log(position.latLng.lat());
+      console.log(position.latLng.lng());
+      this.coordinate = {
+        lat: position.latLng.lat(),
+        lng: position.latLng.lng(),
+      };
     },
     onLoc() {
       this.isLoc = true;
@@ -325,7 +377,6 @@ h2 {
   padding: 14px 0px;
   margin: 0 20px;
   border-bottom: 1px solid #e9e9e9;
-  color: #555;
 }
 
 .feedback p {
@@ -333,6 +384,10 @@ h2 {
   padding: 14px 0px;
   margin: 0 20px;
 }
+
+/* .output {
+  display: flex;
+} */
 
 .output strong {
   color: #575ed8;
@@ -367,14 +422,54 @@ button {
   border-radius: 0 0 2px 2px;
 }
 
-.chat-window .output .bubble {
+/* .bubble-wrap .bubble {
+  position: relative;
+  right: 0px;
+}
+
+.bubble-wrap .bubble-right {
+  position: relative;
+  left: 0px;
+} */
+
+.bubble {
+  /* position: relative;
+  right: 20px; */
+  position: relative;
+  float: left;
   text-align: left;
   width: 400px;
   height: 50px;
   margin: 30px;
   background: #7e98df;
   color: white;
-  border-radius: 35px 35px 35px 10px;
+  border-radius: 10px 35px 35px 35px;
+}
+
+.bubble-right {
+  /* position: relative;
+  right: -450px; */
+  position: relative;
+  float: right;
+  text-align: left;
+  width: 400px;
+  height: 50px;
+  margin: 30px;
+  background: #7e98df;
+  color: white;
+  border-radius: 35px 35px 10px 35px;
+}
+
+.bubble-send {
+  position: relative;
+  float: right;
+  text-align: left;
+  width: 400px;
+  height: 50px;
+  margin: 30px;
+  background: #7e98df;
+  color: white;
+  border-radius: 35px 35px 10px 35px;
 }
 
 .profileImage {

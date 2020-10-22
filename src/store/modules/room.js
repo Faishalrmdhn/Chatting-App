@@ -8,12 +8,12 @@ export default {
         chat:{},
         nextRoomChats:{},
         urlAPI : process.env.VUE_APP_URL,
-        messages: []
+        messages: [],
+        messagesHistory:[],
+        lastMessage:''
     },
     mutations: {
         setRoomById(state, payload) {
-            console.log("room by id");
-            console.log(payload);
             state.roomById = payload.data.data;
         },
         setAllRoom(state, payload) {
@@ -33,6 +33,11 @@ export default {
         },
         setMessages(state, payload){
             state.messages.push(payload)
+        },
+        setMessagesHistory(state, payload){
+            state.messagesHistory = payload
+            const newPayload = payload.chat[payload.chat.length-1]
+            state.lastMessage = newPayload.chat
         }
     },
     actions: {
@@ -85,11 +90,12 @@ export default {
             });
         },
         postChat(context, payload) {
+            console.log(payload)
             return new Promise((resolve, reject) => [
               axios
                 .post(`${context.state.urlAPI}room/chatting`, payload)
                 .then(response => {
-                  console.log(response.data)
+                  console.log(response)
                   context.commit('setChat', response.data.data)
                   resolve(response)
                 })
@@ -98,10 +104,25 @@ export default {
                 })
             ])
           },
-        socketData(context, payload){
-            console.log(payload)
-            context.commit('setSocketdataMutation', payload)
-          },
+        // socketData(context, payload){
+        //     console.log(payload)
+        //     context.commit('setSocketdataMutation', payload)
+        //   },
+        getRoomChatHistory(context, payload){
+        console.log(payload)
+        return new Promise((resolve, reject) => [
+            axios
+              .get(`${context.state.urlAPI}room/roomchat/${payload}`)
+              .then(response => {
+                console.log(response)
+                context.commit('setMessagesHistory', response.data.data[0])
+                resolve(response)
+              })
+              .catch(error => {
+                reject(error.response.data.msg)
+              })
+          ])
+        }
 
 
     },
@@ -121,6 +142,12 @@ export default {
         },
         getMessages(state){
             return state.messages
+        },
+        getMessagesHistory(state){
+            return state.messagesHistory
+        },
+        getLastMessages(state){
+            return state.lastMessage
         }
     }
 }

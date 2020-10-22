@@ -114,6 +114,7 @@ export default {
             title: "Status :",
             autoHideDelay: 2000,
             appendToast: true,
+            variant: "success",
           });
           setTimeout(() => {
             this.$router.push("/main");

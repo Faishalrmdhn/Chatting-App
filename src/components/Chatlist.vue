@@ -2,7 +2,7 @@
   <div class="content-wrapper">
     <div class="outer-container">
       <div class="container-header">
-        <div class="top">Telegram</div>
+        <div class="top">ChatHub</div>
         <div
           class="top"
           id="Settings"
@@ -73,7 +73,7 @@
             @click="GetRoomChat(value)"
             ><b-row>{{ value.user_name }}</b-row
             ><b-row style="color: grey; font-size: 14px; font-weight: 400"
-              >Why did you do that?</b-row
+              >testing</b-row
             ></b-col
           ><b-col class="text-center"
             ><b-row>15:20</b-row
@@ -271,22 +271,14 @@
               >
               </b-form-textarea>
             </b-form-group>
-            <b-form-group label="lat">
-              <b-form-input
-                v-model="form.user_lat"
-                type="text"
-                :placeholder="user.user_lat"
-              >
-              </b-form-input>
-            </b-form-group>
-            <b-form-group label="lng">
-              <b-form-input
-                v-model="form.user_lng"
-                type="text"
-                :placeholder="user.user_lng"
-              >
-              </b-form-input>
-            </b-form-group>
+            <b-row
+              ><b-col cols="12"
+                ><h6>
+                  User Position : {{ coordinate.lat }}.{{ coordinate.lng }}
+                </h6></b-col
+              ></b-row
+            >
+
             <b-row>
               <b-col @click="$bvModal.hide('updateProfile')">
                 <b-button
@@ -307,13 +299,13 @@
         </b-modal>
         <!-- ====================================Edit Profile Ends================================ -->
 
-        <div class="edit-option">
+        <div class="edit-option mb-5">
           <h5>Location</h5>
           <GmapMap
             :center="coordinate"
             :zoom="15"
             map-type-id="terrain"
-            style="width: 400px; height: 275px"
+            style="width: 100%; height: 275px"
           >
             <GmapMarker
               :position="coordinate"
@@ -350,8 +342,6 @@ export default {
         user_name: "",
         user_bio: "",
         user_phone: "",
-        user_lat: "",
-        user_lng: "",
       },
       form2: {
         profileImage: {},
@@ -368,10 +358,10 @@ export default {
       user: "user",
       user_id: "getUserId",
       allRoom: "getAllRoom",
-      // roomById: "getRoomByIdGetters",
       room: "getRoom",
       messages: "getMessages",
-      // nextRoomChat: "getNextRoomChat",
+      messagesHistory: "getMessagesHistory",
+      // lastMessage: "getLastMessages",
     }),
   },
   created() {
@@ -397,7 +387,7 @@ export default {
     // });
     this.socket.on("chatMessage", (data) => {
       this.setMessages(data);
-      console.log(data);
+      // console.log(data);
     });
   },
 
@@ -415,6 +405,7 @@ export default {
       "editProfile",
       "socketData",
       "deleteImageUser",
+      "getRoomChatHistory",
     ]),
     ...mapMutations(["searchMutation", "setMessages"]),
     searchFriends() {
@@ -470,14 +461,16 @@ export default {
         this.recentRoom = data.room_chat_id;
         console.log("room awal");
       }
+      // console.log(data.room_chat_id);
+      this.getRoomChatHistory(data.room_chat_id)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      this.getRoomChatHistory();
     },
-    // },
-    getTheUserId() {
-      console.log(this.user.user_id);
-    },
-    // editProfile() {
-    //   this.edit = true;
-    // },
     clickMarker(position) {
       console.log(position);
       console.log(position.latLng.lat());

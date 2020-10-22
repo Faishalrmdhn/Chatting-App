@@ -18,7 +18,6 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions, mapGetters } from "vuex";
 import Chatlist from "../components/Chatlist.vue";
 import Chat from "../components/Chat";
 export default {
@@ -30,89 +29,9 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    // ...mapGetters({
-    //   userList: "getUserList",
-    //   friendList: "getFriendList",
-    //   user: "user",
-    //   user_id: "getUserId",
-    //   allRoom: "getAllRoom",
-    //   roomById: "getRoomById",
-    // }),
-  },
+  computed: {},
   created() {},
-  methods: {
-    // ...mapActions([
-    //   "getAllRoom",
-    //   "searchUserByEmail",
-    //   "inviteFriends",
-    //   "getUserFriendList",
-    //   "logout",
-    //   "getRoomById",
-    // ]),
-    // ...mapMutations(["searchMutation"]),
-    // searchFriends() {
-    //   this.searchMutation(this.search);
-    //   this.searchUserByEmail();
-    // },
-    // inviteFriend(data) {
-    //   const setData = {
-    //     user_id: this.user.user_id,
-    //     friend_id: data,
-    //   };
-    //   console.log(setData);
-    //   this.inviteFriends(setData)
-    //     .then((response) => {
-    //       this.$bvToast.toast(response.data.msg, {
-    //         title: "Status :",
-    //         autoHideDelay: 500,
-    //         appendToast: true,
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       this.$bvToast.toast(error.data.msg, {
-    //         title: "Status :",
-    //         autoHideDelay: 500,
-    //         appendToast: true,
-    //       });
-    //     });
-    // },
-    // getTheUserId() {
-    //   console.log(this.user.user_id);
-    // },
-    // editProfile() {
-    //   this.edit = true;
-    // },
-    // clickMarker(position) {
-    //   console.log(position);
-    //   console.log(position.latLng.lat());
-    //   console.log(position.latLng.lng());
-    //   this.coordinate = {
-    //     lat: position.latLng.lat(),
-    //     lng: position.latLng.lng(),
-    //   };
-    // },
-    // showModalFriendList() {
-    //   this.$bvModal.show("modalShowFriendList");
-    //   this.getUserFriendList(this.user.user_id);
-    // },
-    // getAllRoomChat(data) {
-    //   console.log(data);
-    //   const result = {
-    //     user_id: this.user.user_id,
-    //     friend_id: data,
-    //   };
-    //   this.getAllRoom(result);
-    // },
-    // getRoomChatById(data) {
-    //   console.log(data);
-    //   const result = {
-    //     user_id: this.user.user_id,
-    //     friend_id: data,
-    //   };
-    //   this.getRoomById(result);
-    // },
-  },
+  methods: {},
 };
 </script>
 
