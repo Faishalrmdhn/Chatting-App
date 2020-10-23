@@ -7,7 +7,7 @@
     <a href="https://github.com/Faishalrmdhn/Chatting-App/issues">Request Feature</a>
   </p>
   
-<!-- ![Image Banner](https://raw.githubusercontent.com/Faishalrmdhn/VueJs-PointOfSale/master/mockup.jpg) -->
+![Image Banner](https://raw.githubusercontent.com/Faishalrmdhn/Chatting-App-BackEnd/master/mockup.jpg)
 
 ## About The Project
 
@@ -23,7 +23,7 @@ ChatHub is a  web-based chat application that aim to connecting people around th
 
 1. <a href="https://nodejs.org/en/download/">Node Js</a>
 2. Node_modules `npm install` or `yarn install`
-3. Backend API Elcapp [`here`](https://github.com/Faishalrmdhn/Backend-Point-Of-Sale)
+3. Backend API Elcapp [`here`](https://github.com/Faishalrmdhn/Chatting-App-BackEnd)
 
 ## Getting Started
 

@@ -422,16 +422,6 @@ button {
   border-radius: 0 0 2px 2px;
 }
 
-/* .bubble-wrap .bubble {
-  position: relative;
-  right: 0px;
-}
-
-.bubble-wrap .bubble-right {
-  position: relative;
-  left: 0px;
-} */
-
 .bubble {
   /* position: relative;
   right: 20px; */
