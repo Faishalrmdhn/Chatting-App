@@ -7,7 +7,7 @@
     <a href="https://github.com/Faishalrmdhn/Chatting-App/issues">Request Feature</a>
   </p>
   
-![Image Banner](https://raw.githubusercontent.com/Faishalrmdhn/Chatting-App-BackEnd/master/mockup.jpg)
+![Image Banner](https://raw.githubusercontent.com/Faishalrmdhn/Chatting-App/master/mockup.jpg)
 
 ## About The Project
 
