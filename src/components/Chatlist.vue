@@ -639,7 +639,7 @@ export default {
 .content-wrapper {
   font-family: "Rubik", sans-serif;
   /* color: ; */
-  width: 100%;
+  width: auto;
   padding: 10px;
   height: 100vh;
   background-color: white;
@@ -715,8 +715,8 @@ export default {
 
 .containerChatList {
   overflow: auto;
-
   height: 345px;
+  overflow: hidden;
 }
 
 .text {

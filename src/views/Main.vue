@@ -1,7 +1,8 @@
 <template>
+  <!-- <b-container-fluid> -->
   <b-row fluid align-v="center" align-h="between">
-    <b-col sm="4" class="px-0"> <Chatlist /> </b-col
-    ><b-col sm="8" class="px-0 right">
+    <b-col sm="4"> <Chatlist /> </b-col
+    ><b-col sm="8" class="right">
       <Chat />
 
       <!-- =====================If any friends chat room exist================================= -->
@@ -15,6 +16,7 @@
       <!-- =====================If any friends chat room exist================================= -->
     </b-col>
   </b-row>
+  <!-- </b-container-fluid> -->
 </template>
 
 <script>
@@ -59,12 +61,6 @@ export default {
   background-color: white;
 }
 
-.edit-option {
-  font-family: "Rubik", sans-serif;
-  text-align: left;
-  color: black;
-  width: 100%;
-}
 .container-header {
   font-size: 29px;
   color: #7e98df;
@@ -83,27 +79,6 @@ export default {
   text-align: center;
   border: 1px solid white;
 }
-.button-option:hover {
-  cursor: pointer;
-  width: auto;
-  /* height: 50px; */
-  color: white;
-  background-color: #7e98df;
-  border-radius: 20px;
-}
-.column {
-  margin-top: 15px;
-  margin-bottom: 5px;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-around;
-}
-
-.containerChatList {
-  overflow: auto;
-
-  height: 345px;
-}
 
 .text {
   text-align: center;
@@ -121,14 +96,5 @@ input[type="search"] {
   background: rgb(219, 215, 215);
   border-radius: 15px;
   line-height: 1.5;
-}
-
-.search {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  text-align: center;
-
-  /* border-radius: 20px; */
 }
 </style>
