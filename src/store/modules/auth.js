@@ -5,7 +5,7 @@ export default {
   state: {
     user: {},
     token: localStorage.getItem("token") || null,
-    urlAPI: process.env.VUE_APP_URL
+    urlAPI: 'https://backend-chathub.fwdev.online/'
   },
   mutations: {
     setUser(state, payload) {
