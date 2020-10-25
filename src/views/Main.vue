@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import Chatlist from "../components/Chatlist.vue";
 import Chat from "../components/Chat";
 export default {
@@ -29,22 +30,23 @@ export default {
   data() {
     return {};
   },
-  computed: {},
-  created() {},
-  methods: {},
+  computed: {
+    ...mapGetters({ user: "user" }),
+  },
+  created() {
+    this.getAllRoom(this.user.user_id);
+  },
+  methods: {
+    ...mapActions(["getAllRoom"]),
+  },
 };
 </script>
 
 <style scoped>
-.headerChat {
-  padding: 7px 10px;
-  background-color: white;
-}
-
 .right {
   color: #7e98df;
   text-align: center;
-  height: 100vh;
+  height: 100%;
   background-color: #fafafa;
 }
 

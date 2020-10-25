@@ -3,6 +3,9 @@
     <div class="outer-container">
       <div class="container-header">
         <div class="top">ChatHub</div>
+        <!-- <div v-for="(value, index) in lastMessage" :key="index">
+          <div>{{ value.chat }}</div>
+        </div> -->
         <div
           class="top"
           id="Settings"
@@ -47,7 +50,9 @@
         </div>
       </div>
       <div class="column">
-        <div><button @click="getRoom" class="button-option">All</button></div>
+        <div>
+          <button @click="getRoom()" class="button-option">All</button>
+        </div>
         <div><button class="button-option">Unread</button></div>
         <div><button class="button-option">Read</button></div>
       </div>
@@ -72,12 +77,14 @@
             style="font-size: 18px; font-weight: 500"
             @click="GetRoomChat(value)"
             ><b-row>{{ value.user_name }}</b-row
-            ><b-row style="color: grey; font-size: 14px; font-weight: 400"
-              >testing</b-row
+            ><b-row style="color: grey; font-size: 14px; font-weight: 400">
+              <b-col>last Message</b-col></b-row
             ></b-col
           ><b-col class="text-center"
-            ><b-row>15:20</b-row
-            ><b-row><b-badge variant="info">99+</b-badge></b-row></b-col
+            ><b-row><b-col>15.20</b-col> </b-row
+            ><b-row
+              ><b-col><b-badge variant="info">99+</b-badge></b-col>
+            </b-row></b-col
           ></b-row
         >
       </b-container>
@@ -112,7 +119,8 @@
               ><img
                 class="profileImage"
                 :src="url_API + value.profileImage"
-                alt="user friend" /></b-col
+                alt="user friend"
+              /> </b-col
             ><b-col v-if="value.profileImage === ''">
               <img
                 class="profileImage"
@@ -142,7 +150,21 @@
               class="mt-3 text-center"
               v-for="(value, index) in userList"
               :key="index"
-              ><b-col><b-avatar size="2em"></b-avatar></b-col
+              ><b-col>
+                <div v-if="value.profileImage !== ''">
+                  <img
+                    class="profileImage"
+                    :src="url_API + value.profileImage"
+                    alt="image profile"
+                  />
+                </div>
+                <div v-if="value.profileImage === ''">
+                  <img
+                    class="profileImage"
+                    src="../assets/default.png"
+                    alt="image profile"
+                  />
+                </div> </b-col
               ><b-col>{{ value.user_name }}</b-col
               ><b-col @click="inviteFriend(value.user_id)"
                 ><img src="../assets/Plus.png" alt="add friend" /></b-col
@@ -361,7 +383,7 @@ export default {
       room: "getRoom",
       messages: "getMessages",
       messagesHistory: "getMessagesHistory",
-      // lastMessage: "getLastMessages",
+      lastMessage: "getLastMessages",
     }),
   },
   created() {
@@ -377,6 +399,7 @@ export default {
       .catch((error) => {
         alert(error);
       });
+    this.getAllRoom(this.user.user_id);
   },
   mounted() {
     // this.socket.on("chatMessage", (data) => {
@@ -469,7 +492,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-      this.getRoomChatHistory();
+      // this.getRoomChatHistory(); =====================================
     },
     clickMarker(position) {
       console.log(position);

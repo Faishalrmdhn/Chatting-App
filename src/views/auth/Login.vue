@@ -106,7 +106,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["login", "getUserById"]),
+    ...mapActions(["login", "getUserById", "getAllRoom"]),
     onSubmit() {
       this.login(this.form)
         .then((result) => {
@@ -117,10 +117,11 @@ export default {
             variant: "success",
           });
           setTimeout(() => {
-            this.$router.push("/main");
+            this.$router.push("/");
           }, 1500);
           console.log(result.data.user_id);
           this.getUserById(result.data.user_id);
+          this.getAllRoom(result.data.user_id);
         })
         .catch((error) => {
           this.alert = true;

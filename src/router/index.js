@@ -6,13 +6,12 @@ import Register from "../views/auth/Register.vue";
 import Forgot from "../views/auth/Forgot.vue";
 import Main from "../views/Main.vue";
 import store from "../store/index";
-import Chat from '../views/chat.vue'
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/main",
+    path: "/",
     name: "Main",
     component: Main,
     meta: { requiresAuth: true },
@@ -41,12 +40,7 @@ const routes = [
     component: Forgot,
     meta: { requiresVisitor: true },
   },
-  {
-    path: "/chat",
-    name: "Chat",
-    component: Chat,
-    meta: { requiresVisitor: true },
-  },
+ 
 ];
 
 const router = new VueRouter({
@@ -67,7 +61,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some((record) => record.meta.requiresVisitor)) {
     if (store.getters.isLogin) {
       next({
-        path: "/main",
+        path: "/",
       });
     } else {
       next();

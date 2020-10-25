@@ -19,7 +19,8 @@ export default {
         setAllRoom(state, payload) {
             console.log("get all room");
             console.log(payload);
-            state.allRoom = payload.data.data;
+            state.allRoom = payload.data.data.allRoom;
+            // state.lastMessage = payload.data.data.lastChat
         },
         setPostRoom(state, payload) {
             state.room = payload.data.data
@@ -36,8 +37,8 @@ export default {
         },
         setMessagesHistory(state, payload){
             state.messagesHistory = payload
-            const newPayload = payload.chat[payload.chat.length-1]
-            state.lastMessage = newPayload.chat
+            // const newPayload = payload.chat[payload.chat.length-1]
+            // state.lastMessage = newPayload.chat
         }
     },
     actions: {
