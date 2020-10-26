@@ -5,7 +5,7 @@
         {{ isMsg }}
       </b-alert>
       <b-row class="content" align-h="center" align-v="center">
-        <b-col md="10" class="card p-3">
+        <b-col md="9" class="card p-3">
           <div class="text-left">
             <h3 class="text-center" style="color: #7e98df; font-weight: 500">
               Login
@@ -45,12 +45,16 @@
                 />
               </b-form-group>
 
-              <b-row align-h="center" class="text-right">
+              <b-row
+                align-h="center"
+                class="text-right"
+                style="font-size: 12px"
+              >
                 <b-col>
-                  <router-link to="/forgot">Forgot Password?</router-link>
+                  <router-link to="/forgot">Forgot Password? </router-link>
                 </b-col>
               </b-row>
-              <b-row class="text-center m-4">
+              <b-row class="text-center m-3">
                 <b-col>
                   <button class="button">Login</button>
                 </b-col>
@@ -154,7 +158,7 @@ export default {
 
 .container {
   /* color: aqua; */
-  height: 100%;
+  height: auto;
   width: 100%;
 }
 
@@ -162,11 +166,12 @@ export default {
   background-color: white;
   border-radius: 30px;
   height: 90%;
+  /* border-bottom: 5px solid #7e98df; */
 }
 
 input {
   width: 100%;
-  height: 65px;
+  height: 50px;
   border: 1px solid rgba(169, 169, 169, 0.6);
 
   border-radius: 10px;

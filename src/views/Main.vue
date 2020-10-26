@@ -6,7 +6,10 @@
       <Chat />
 
       <!-- =====================If any friends chat room exist================================= -->
-      <!-- <b-row style="height: 100%" align-v="center"
+      <!-- <b-row
+        v-if="roomById === '' || roomById === null || roomById === undefined"
+        style="height: 100%"
+        align-v="center"
         ><b-col
           ><h4>Please select a chat to start messaging</h4>
           <br />
@@ -33,7 +36,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters({ user: "user" }),
+    ...mapGetters({ user: "user", roomById: "getRoomByIdGetters" }),
   },
   created() {
     this.getAllRoom(this.user.user_id);
@@ -52,10 +55,9 @@ export default {
   background-color: #fafafa;
 }
 
-/* ============================================= */
 .content-wrapper {
   font-family: "Rubik", sans-serif;
-  /* color: ; */
+
   padding: 10px;
   height: 100vh;
   background-color: white;

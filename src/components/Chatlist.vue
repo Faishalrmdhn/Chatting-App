@@ -90,17 +90,21 @@
       </b-container>
       <!-- ======================Popover Settings Start==================================== -->
 
-      <b-popover placement="bottomleft" target="Settings" triggers=" hover">
+      <b-popover
+        class="popover"
+        placement="bottomleft"
+        target="Settings"
+        triggers=" hover"
+        style="color: white"
+      >
         <template v-slot:title></template>
-        <b-container style="cursor: pointer" fluid>
+        <b-container style="cursor: pointer; color: white" fluid>
           <b-row v-b-toggle.editProfile>Settings</b-row>
           <b-row @click="showModalFriendList()">Contacts</b-row>
-          <b-row>Save Messages</b-row>
+          <!-- <b-row>Save Messages</b-row> -->
           <b-row @click="$bvModal.show('modal-search-friend')"
             >Invite Friends</b-row
           >
-
-          <b-row>Telegram FAQ</b-row>
           <b-row @click="logout">Logout</b-row>
         </b-container>
       </b-popover>
@@ -166,7 +170,9 @@
                   />
                 </div> </b-col
               ><b-col>{{ value.user_name }}</b-col
-              ><b-col @click="inviteFriend(value.user_id)"
+              ><b-col
+                style="cursor: pointer"
+                @click="inviteFriend(value.user_id)"
                 ><img src="../assets/Plus.png" alt="add friend" /></b-col
             ></b-row>
           </b-container>
@@ -633,6 +639,11 @@ export default {
   text-align: center;
   height: 100vh;
   background-color: #fafafa;
+}
+
+.popover {
+  background-color: #7e98df;
+  /* border-radius: 35px 10px 35px 35px; */
 }
 
 /* ============================================= */

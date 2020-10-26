@@ -5,7 +5,7 @@
         {{ isMsg }}
       </b-alert>
       <b-row class="content" align-h="center">
-        <b-col md="10" class="card p-3">
+        <b-col md="9" class="card p-3">
           <div class="text-left">
             <h3 class="text-center" style="color: #7e98df; font-weight: 500">
               Register
@@ -87,8 +87,8 @@
             </b-form>
             <b-row class="text-center">
               <b-col>
-                Don't have an account?
-                <router-link to="/register"> Sign up </router-link>
+                Already have an account?
+                <router-link to="/login"> Sign in </router-link>
               </b-col>
             </b-row>
           </div>

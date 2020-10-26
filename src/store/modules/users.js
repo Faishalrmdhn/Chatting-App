@@ -43,8 +43,9 @@ export default {
           console.log("bisa");
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response);
           console.log("gabisa");
+          
         });
     },
     getUserById(context, payload) {
