@@ -105,7 +105,7 @@
           <b-row @click="$bvModal.show('modal-search-friend')"
             >Invite Friends</b-row
           >
-          <b-row @click="logout">Logout</b-row>
+          <b-row @click="$bvModal.show('modalLogout')">Logout</b-row>
         </b-container>
       </b-popover>
       <!-- =======================Popover Settings Ends=========================== -->
@@ -346,6 +346,22 @@
         </div>
       </div>
     </b-sidebar>
+    <b-modal id="modalLogout" hide-footer style>
+      <template v-slot:modal-header
+        ><h5>Are you sure want to logout?</h5></template
+      >
+      <b-row
+        ><b-col cols="6">
+          <b-button block variant="danger" @click="logout">
+            Yes</b-button
+          > </b-col
+        ><b-col cols="6"
+          ><b-button variant="info" @click="$bvModal.hide('modalLogout')" block
+            >cancel</b-button
+          ></b-col
+        ></b-row
+      >
+    </b-modal>
   </div>
 </template>
 
