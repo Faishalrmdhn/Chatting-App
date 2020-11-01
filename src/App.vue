@@ -7,7 +7,6 @@
 
 //
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
 // import splashScreen from "./components/splashScreen.vue";
 import { mapActions } from "vuex";
 export default {

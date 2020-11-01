@@ -1,6 +1,6 @@
 <h1 align='center'>ChatHub - Web Chat App</h1>
   <p align="center">
-    <a href="https://suspicious-swartz-18da05.netlify.app">View Demo</a>
+    <a href="https://chathub.netlify.app">View Demo</a>
     ·
     <a href="https://github.com/Faishalrmdhn/Chatting-App/issues">Report Bug</a>
     ·
@@ -27,7 +27,7 @@ ChatHub is a  web-based chat application that aim to connecting people around th
 
 ## Getting Started
 
-1. Download this Project or you can type `git clone #https://github.com/Faishalrmdhn/VueJs-PointOfSale`
+1. Download this Project or you can type `git clone #https://github.com/Faishalrmdhn/Chatting-App`
 2. Open app's directory in CMD or Terminal
 3. Type `npm install` or `yarn install`
 4. Add .env file at root folder project
